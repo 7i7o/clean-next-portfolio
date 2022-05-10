@@ -33,25 +33,27 @@
         C15 10 0 7 8 8
         z" />
     <linearGradient id="A">
-        <stop offset="0" stop-color="rgb(0, 0, 0, .5)" />
-        <stop offset=".5" stop-color="rgb(17, 170, 255, .71875)" />
-        <stop offset="1" stop-color="rgb(255, 255, 255, .5)" />
+        <stop offset="0" stop-color="rgba(0, 0, 0, .5)" />
+        <stop offset=".5" stop-color="rgba(17, 170, 255, .71875)" />
+        <stop offset="1" stop-color="rgba(255, 255, 255, .5)" />
         <!-- <stop offset="0" stop-color="rgba(17,119,255,.84375)" />
         <stop offset="1" stop-color="rgb(255,187,85,.625)" /> -->
     <!-- 1f7B    fb54 -->
     </linearGradient>
     <linearGradient id="B">
-        <stop offset="0" stop-color="rgb(255, 255, 255, .5)" />
-        <stop offset=".5" stop-color="rgb(17, 170, 255, .71875)" />
-        <stop offset="1" stop-color="rgb(0, 0, 0, .5)" />
+        <stop offset="0" stop-color="rgba(255, 255, 255, .5)" />
+        <stop offset=".5" stop-color="rgba(17, 170, 255, .71875)" />
+        <stop offset="1" stop-color="rgba(0, 0, 0, .5)" />
         <!-- <stop offset="0" stop-color="rgb(255,187,85,.625)" />
         <stop offset="1" stop-color="rgba(17,119,255,.84375)" /> -->
     </linearGradient>
     <radialGradient id="C">
-        <!-- <stop offset="0" stop-color="rgb(17, 170, 255, .71875)" />
-        <stop offset="1" stop-color="rgb(17, 170, 255, .71875)" /> -->
         <stop offset="0" stop-color="rgba(170,136,204,.78125)" />
         <stop offset="1" stop-color="rgba(170,136,204,.78125)" />
+        <!-- <stop offset="0" stop-color="rgba(170,136,204,.78125)" />
+        <stop offset="1" stop-color="rgba(170,136,204,.78125)" /> -->
+        <!-- <stop offset="0" stop-color="rgb(17, 170, 255, .71875)" />
+        <stop offset="1" stop-color="rgb(17, 170, 255, .71875)" /> -->
         <!-- a8C9    1AF7 -->
     </radialGradient>
 </svg>
