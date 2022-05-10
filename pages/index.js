@@ -1,47 +1,18 @@
 import Head from 'next/head'
-import Image from 'next/image'
+// import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
 // Using RainbowKit to have a ConnectButton for SIWE
 import { ConnectButton } from '@rainbow-me/rainbowkit'
+import SVGies from './components/SVGies';
 
 const Home = () => {
 
-  const exampleAddress = '0xa8C93d8B2714e11f1f7Bfb54119bd9B823051AF7';
+  const exampleAddress1 = '0xC53128eAe55d64C2bD70F842247a0E8D27647241'; // Wave Portal
+  const exampleAddress2 = '0xa8B1b015E007D588cdD5DFfe61D0d8ec8fC75359'; // Ape Waver
+  const exampleAddress3 = '0xDEBD7a625a4666419Dbd6C3134088307F5D273c8'; // CCC
+  const exampleAddress4 = '0x45ee33C1806a9e6976d0985246ae839Ea7Fc3dB4'; // SSBM
 
-  const hex2int = (hexChar) => parseInt(hexChar, 16);
-
-  const getColor = (hexString) => {
-    const data = hexString.length == 4 ? hexString: hexString.length == 3 ? hexString + 'f' : 'ffff'
-    const r = hex2int(data.charAt(0)) + hex2int(data.charAt(0)) * 16;
-    const g = hex2int(data.charAt(1)) + hex2int(data.charAt(1)) * 16;
-    const b = hex2int(data.charAt(2)) + hex2int(data.charAt(2)) * 16;
-    const opacity = 0.5 + parseInt(data.charAt(3),16) / 32;
-    return `rgba(${r},${g},${b},${opacity})`
-  }
-
-  const getBezierCurve = (hexString) => {
-    if (hexString.length != 6) return;
-    return `Q ${hex2int(hexString.charAt(0))} ${hex2int(hexString.charAt(1))} ${hex2int(hexString.charAt(2))} ${hex2int(hexString.charAt(3))} ${hex2int(hexString.charAt(4))} ${hex2int(hexString.charAt(5))}`
-  }
-
-  const getPath = (ethAddress) => {
-    const str = ''
-    console.log(ethAddress.substring(2,8))
-    console.log(ethAddress.substring(8,14))
-    console.log(ethAddress.substring(14,20))
-    console.log(ethAddress.substring(20,26))
-    console.log(ethAddress.substring(26,32))
-    console.log(ethAddress.substring(32,38))
-    str += getBezierCurve(ethAddress.substring(2,8))
-    str += getBezierCurve(ethAddress.substring(8,14))
-    str += getBezierCurve(ethAddress.substring(14,20))
-    str += getBezierCurve(ethAddress.substring(20,26))
-    str += getBezierCurve(ethAddress.substring(26,32))
-    str += getBezierCurve(ethAddress.substring(32,38))
-    
-    return str
-  }
 
   return (
     <div className={styles.container}>
@@ -53,14 +24,16 @@ const Home = () => {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Hi! I&apos;m Matias
+          {/* Hi! I&apos;m Matias */}
+          SVGies
         </h1>
 
         <h2 >
-          I&apos;m a enthusiastic developer with a soft spot for web3
+          {/* I&apos;m a enthusiastic developer with a soft spot for web3 */}
+          A colorful SVG representation of your ethereum address
         </h2>
 
-        <ConnectButton
+        {/* <ConnectButton
           chainStatus="icon"
           accountStatus={{
             smallScreen: 'avatar',
@@ -70,16 +43,12 @@ const Home = () => {
             smallScreen: false,
             largeScreen: true
           }}
-        />
-        <h3>
-          {getColor(exampleAddress.substring(2,6))}
-        </h3>
-        <h3>
-          {getColor(exampleAddress.substring(38))}
-        </h3>
-        <h3>
-          {getPath(exampleAddress)}
-        </h3>
+        /> */}
+        <div className="SVGie"><SVGies address={exampleAddress1} width="200"/></div>
+        <div className="SVGie"><SVGies address={exampleAddress2} width="200"/></div>
+        <div className="SVGie"><SVGies address={exampleAddress3} width="200"/></div>
+        <div className="SVGie"><SVGies address={exampleAddress4} width="200"/></div>
+        
         {/* 
         <p className={styles.description}>
           Get started by editing{' '}
