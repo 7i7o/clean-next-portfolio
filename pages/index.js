@@ -6,6 +6,43 @@ import styles from '../styles/Home.module.css'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 
 const Home = () => {
+
+  const exampleAddress = '0xa8C93d8B2714e11f1f7Bfb54119bd9B823051AF7';
+
+  const hex2int = (hexChar) => parseInt(hexChar, 16);
+
+  const getColor = (hexString) => {
+    const data = hexString.length == 4 ? hexString: hexString.length == 3 ? hexString + 'f' : 'ffff'
+    const r = hex2int(data.charAt(0)) + hex2int(data.charAt(0)) * 16;
+    const g = hex2int(data.charAt(1)) + hex2int(data.charAt(1)) * 16;
+    const b = hex2int(data.charAt(2)) + hex2int(data.charAt(2)) * 16;
+    const opacity = 0.5 + parseInt(data.charAt(3),16) / 32;
+    return `rgba(${r},${g},${b},${opacity})`
+  }
+
+  const getBezierCurve = (hexString) => {
+    if (hexString.length != 6) return;
+    return `Q ${hex2int(hexString.charAt(0))} ${hex2int(hexString.charAt(1))} ${hex2int(hexString.charAt(2))} ${hex2int(hexString.charAt(3))} ${hex2int(hexString.charAt(4))} ${hex2int(hexString.charAt(5))}`
+  }
+
+  const getPath = (ethAddress) => {
+    const str = ''
+    console.log(ethAddress.substring(2,8))
+    console.log(ethAddress.substring(8,14))
+    console.log(ethAddress.substring(14,20))
+    console.log(ethAddress.substring(20,26))
+    console.log(ethAddress.substring(26,32))
+    console.log(ethAddress.substring(32,38))
+    str += getBezierCurve(ethAddress.substring(2,8))
+    str += getBezierCurve(ethAddress.substring(8,14))
+    str += getBezierCurve(ethAddress.substring(14,20))
+    str += getBezierCurve(ethAddress.substring(20,26))
+    str += getBezierCurve(ethAddress.substring(26,32))
+    str += getBezierCurve(ethAddress.substring(32,38))
+    
+    return str
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -34,6 +71,15 @@ const Home = () => {
             largeScreen: true
           }}
         />
+        <h3>
+          {getColor(exampleAddress.substring(2,6))}
+        </h3>
+        <h3>
+          {getColor(exampleAddress.substring(38))}
+        </h3>
+        <h3>
+          {getPath(exampleAddress)}
+        </h3>
         {/* 
         <p className={styles.description}>
           Get started by editing{' '}
