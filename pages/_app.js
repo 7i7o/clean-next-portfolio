@@ -1,56 +1,59 @@
 import '../styles/globals.css'
 
-// Adding RainbowKit for a Sign In With Ethereum experience
-import '@rainbow-me/rainbowkit/styles.css';
+import { Provider, chain, createClient, defaultChains } from 'wagmi'
+import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
+import { InjectedConnector } from 'wagmi/connectors/injected'
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 
-import {
-  apiProvider,
-  configureChains,
-  getDefaultWallets,
-  RainbowKitProvider,
-  lightTheme,
-  darkTheme,
-} from '@rainbow-me/rainbowkit';
-import { chain, createClient, WagmiProvider } from 'wagmi';
+import { providers } from 'ethers';
 
-const { chains, provider } = configureChains(
-  [chain.mainnet, chain.polygon, chain.optimism, chain.arbitrum, chain.rinkeby],
-  [
-    apiProvider.alchemy(process.env.ALCHEMY_ID),
-    apiProvider.fallback()
-  ]
-);
 
-const { connectors } = getDefaultWallets({
-  // appName: 'My RainbowKit App',
-  appName: process.env.NEXT_PUBLIC_APP_NAME,
-  chains
-});
+// API key for Ethereum node
+// Two popular services are Alchemy (alchemy.com) and Infura (infura.io)
+const alchemyId = process.env.NEXT_PUBLIC_ALCHEMY_ID
 
-const wagmiClient = createClient({
+const chains = defaultChains
+const defaultChain = chain.mainnet
+
+// Set up connectors
+const client = createClient({
   autoConnect: true,
-  connectors,
-  provider
+  connectors({ chainId }) {
+    const chain = chains.find((x) => x.id === chainId) ?? defaultChain
+    const rpcUrl = chain.rpcUrls.alchemy
+      ? `${chain.rpcUrls.alchemy}/${alchemyId}`
+      : chain.rpcUrls.default
+    return [
+      new MetaMaskConnector({ chains }),
+      new CoinbaseWalletConnector({
+        chains,
+        options: {
+          appName: 'wagmi',
+          chainId: chain.id,
+          jsonRpcUrl: rpcUrl,
+        },
+      }),
+      new WalletConnectConnector({
+        chains,
+        options: {
+          qrcode: true,
+          rpc: { [chain.id]: rpcUrl },
+        },
+      }),
+      new InjectedConnector({
+        chains,
+        options: { name: 'Injected' },
+      }),
+    ]
+  },
 })
 
 const  MyApp = ({ Component, pageProps }) => {
   return (
-    <WagmiProvider client={wagmiClient}>
-      <RainbowKitProvider
-        chains={chains}
-        coolMode
-        theme={{
-          lightMode: lightTheme(),
-          darkMode: darkTheme(),
-        }}
-        appInfo={{
-          appName: process.env.NEXT_PUBLIC_APP_NAME,
-          // learnMoreUrl: 'https://learnaboutcryptowallets.example',
-        }}
-      >
+    <Provider client={client}>
         <Component {...pageProps} />
-      </RainbowKitProvider>
-    </WagmiProvider>
+    </Provider>
   );
 }
 

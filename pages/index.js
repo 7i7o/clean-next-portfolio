@@ -1,12 +1,13 @@
 import Head from 'next/head'
-// import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
-// Using RainbowKit to have a ConnectButton for SIWE
-import { ConnectButton } from '@rainbow-me/rainbowkit'
 import SVGies from './components/SVGies';
 
+import { useAccount, useConnect, useDisconnect, useEnsAvatar, useEnsName } from 'wagmi'
+
+
 const Home = () => {
+
 
   const exampleAddress1 = '0xC53128eAe55d64C2bD70F842247a0E8D27647241'; // Wave Portal
   const exampleAddress2 = '0xa8B1b015E007D588cdD5DFfe61D0d8ec8fC75359'; // Ape Waver
@@ -18,6 +19,14 @@ const Home = () => {
   const exampleAddress8 = '0x0b29CF9b4D48BF75Bd1c2681cA07aB102F85c98C'; // 7i7o-domains
   const exampleAddress9 = '0xBE127507dA672f51492C416274470702F89c4918'; // Cobie
   const exampleAddress0 = '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266'; // HH #0
+
+
+  const { data: account } = useAccount()
+  const { data: ensAvatar } = useEnsAvatar({ addressOrName: account?.address })
+  const { data: ensName } = useEnsName({ address: account?.address })
+  const { connect, connectors, error, isConnecting, pendingConnector } =
+    useConnect()
+  const { disconnect } = useDisconnect()
 
 
   return (
@@ -39,17 +48,35 @@ const Home = () => {
           Colorful SVGs as a visual representation of your ethereum address
         </h2>
 
-        {/* <ConnectButton
-          chainStatus="icon"
-          accountStatus={{
-            smallScreen: 'avatar',
-            largeScreen: 'full'
-          }}
-          showBalance={{
-            smallScreen: false,
-            largeScreen: true
-          }}
-        /> */}
+        {!account &&
+          <>
+            <h2>Connect your wallet to see yours</h2>
+            <div className={styles.connectors}>
+              {connectors.map((x) => (
+                <button className={styles.web3button} key={x.id} onClick={() => connect(x)}>
+                  {x.name} {!x.ready && ' (unsupported)'}
+                </button>
+              ))}
+            </div>
+            <div className={styles.spacer}>&nbsp;</div>
+          </>
+        }
+
+        {account &&
+          <>
+            <h2>Here is your wallet&apos;s SVGie</h2>
+            <div className={styles.connectors}>
+              <button className={styles.web3button} onClick={disconnect}>Disconnect</button>
+            </div>
+            <h4>{ensName ? `${ensName}` : account.address}</h4>
+            {/* <h5>{ensName ? `${ensName} (${account.address})` : account.address}</h5> */}
+            <div className={styles.grid}>
+              <div className={styles.card}><SVGies address={account.address} width={200} height={200} fill={`#000`} /></div>
+            </div>
+          </>
+        }
+
+        <h2>Some example SVGies are</h2>
         <div className={styles.grid}>
           <div className={styles.card}><SVGies address={exampleAddress6} width={200} height={200} fill={`#000`} /></div>
           <div className={styles.card}><SVGies address={exampleAddress2} width={200} height={200} fill={`#000`} /></div>
