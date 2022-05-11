@@ -17,12 +17,6 @@ const SVGies = ({ address, width, height, fill }) => {
         return `rgba(${r},${g},${b},${a})`
     }
 
-    // Split hex data into groups of 4 bytes to create rgba colors
-    const getColors = (hexData) => {
-        const colors = hexData?.slice(2).match(/.{1,8}/g) || [];
-        return colors.map(hex => [hex, getRGBAString(hex)])
-    }
-
     // Creates a path from an array with all the control points defined
     const getPath = (arr) => {
 
@@ -57,25 +51,32 @@ const SVGies = ({ address, width, height, fill }) => {
         return arr
     }
 
-    const getPaths = (ethAddress) => {
-        const numArray = ethAddress?.substring(2).split('').map(
-            // We 'shift' coordinates by 8 to center them inside
-            // a 32x32 grid with 'hex' values
-            char => parseInt(char, 16) + 8
-        )
 
-        const arr = softenCurves(numArray)
-
-        // We create a (vertical) symmetric set of coordinates
-        // to give the SVG an easier way to be remembered
-        let symArr = arr?.map((val, index) => (index % 2) ? val : 32 - val)
-
-        return [getPath(arr), getPath(symArr)]
-
-    }
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => setAddr(address), [])
     useEffect(() => {
+        // Split hex data into groups of 4 bytes to create rgba colors
+        const getColors = (hexData) => {
+            const colors = hexData?.slice(2).match(/.{1,8}/g) || [];
+            return colors.map(hex => [hex, getRGBAString(hex)])
+        }
+
+        const getPaths = (ethAddress) => {
+            const numArray = ethAddress?.substring(2).split('').map(
+                // We 'shift' coordinates by 8 to center them inside
+                // a 32x32 grid with 'hex' values
+                char => parseInt(char, 16) + 8
+            )
+
+            const arr = softenCurves(numArray)
+
+            // We create a (vertical) symmetric set of coordinates
+            // to give the SVG an easier way to be remembered
+            let symArr = arr?.map((val, index) => (index % 2) ? val : 32 - val)
+
+            return [getPath(arr), getPath(symArr)]
+
+        }
         if (addr) {
             let hash = keccak256(addr)
             setColors(getColors(hash))
