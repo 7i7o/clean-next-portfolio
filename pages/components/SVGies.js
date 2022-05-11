@@ -1,8 +1,8 @@
-import { useState } from 'react'
 import { keccak256 } from "ethers/lib/utils"
 
 const SVGies = ({address, width, height, fill}) => {
 
+    // Create an rgba string for setting colors in SVG Gradients
     const getRGBAString = (hexString) => {
         const data = hexString.length == 8 ? hexString : hexString.length == 6 ? hexString + 'ff' : 'ffffffff'
         const r = parseInt(data.slice(0, 2), 16)
@@ -12,6 +12,7 @@ const SVGies = ({address, width, height, fill}) => {
         return `rgba(${r},${g},${b},${a})`
     }
 
+    // Split hex data into groups of 4 bytes to create rgba colors
     const getColors = (hexData) => {
         const colors = hexData.slice(2).match(/.{1,8}/g) || [];
         return colors.map( hex => [hex,getRGBAString(hex)])
@@ -82,6 +83,7 @@ const SVGies = ({address, width, height, fill}) => {
                 <stop offset="1" stopColor={colors[1][1]} />
                 {/* <stop offset="1" stopColor="transparent" /> */}
             </radialGradient>
+            <rect width="100%" height="100%" opacity="1" fill="white"/>
             <rect width="100%" height="100%" opacity=".5" fill={`url(#${colors[0][0]}${colors[1][0]})`}/>
             {/* <circle cy={16} cx={16} r={16} opacity=".5" fill={`url(#${colors[0][0]}${colors[1][0]})`}/> */}
 
