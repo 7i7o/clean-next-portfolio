@@ -56,6 +56,7 @@ const Home = () => {
                   {x.name} {!x.ready && ' (unsupported)'}
                 </button>
               ))}
+              {error && <div>{error.message}</div>}
             </div>
             <div className={styles.spacer}>&nbsp;</div>
           </>
@@ -72,6 +73,8 @@ const Home = () => {
             <div className={styles.grid}>
               <div className={styles.card}><SVGies address={account.address} width={200} height={200} fill={`#000`} /></div>
             </div>
+            <button className={styles.web3button} disabled={true} >Mint as NFT (soon)</button>
+            <div className={styles.miniSpacer}>&nbsp;</div>
           </>
         }
 

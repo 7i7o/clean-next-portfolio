@@ -3,12 +3,12 @@
 }
 
 .main {
-  min-height: 100vh;
+  /* min-height: 100vh; */
   padding: 4rem 0;
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
   background-color: #e0e0e0;
 }
@@ -147,5 +147,13 @@
 }
 
 .spacer {
-  min-height: 12.6em;
+  min-height: 16.75em;
+}
+.miniSpacer {
+  min-height: .5em;
+}
+
+.web3button:disabled {
+  background-color: #808080;
+  color: #e0e0e0;
 }
