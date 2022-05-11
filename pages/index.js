@@ -8,7 +8,6 @@ import { useAccount, useConnect, useDisconnect, useEnsAvatar, useEnsName } from 
 
 const Home = () => {
 
-
   const exampleAddress1 = '0xC53128eAe55d64C2bD70F842247a0E8D27647241'; // Wave Portal
   const exampleAddress2 = '0xa8B1b015E007D588cdD5DFfe61D0d8ec8fC75359'; // Ape Waver
   const exampleAddress3 = '0xDEBD7a625a4666419Dbd6C3134088307F5D273c8'; // CCC
@@ -32,8 +31,8 @@ const Home = () => {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Matias Parij</title>
-        <meta name="description" content="Matias' Portfolio Page" />
+        <title>SVGies</title>
+        <meta name="description" content="Colorful SVGs as visual representation of ethereum Addresses" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -43,7 +42,7 @@ const Home = () => {
           SVGies
         </h1>
 
-        <h2 >
+        <h2 className={styles.description}>
           {/* I&apos;m a enthusiastic developer with a soft spot for web3 */}
           Colorful SVGs as a visual representation of your ethereum address
         </h2>
@@ -76,71 +75,24 @@ const Home = () => {
           </>
         }
 
-        <h2>Some example SVGies are</h2>
-        <div className={styles.grid}>
-          <div className={styles.card}><SVGies address={exampleAddress6} width={200} height={200} fill={`#000`} /></div>
-          <div className={styles.card}><SVGies address={exampleAddress2} width={200} height={200} fill={`#000`} /></div>
-          <div className={styles.card}><SVGies address={exampleAddress7} width={200} height={200} fill={`#000`} /></div>
-          <div className={styles.card}><SVGies address={exampleAddress9} width={200} height={200} fill={`#000`} /></div>
-          <div className={styles.card}><SVGies address={exampleAddress1} width={200} height={200} fill={`#000`} /></div>
-          <div className={styles.card}><SVGies address={exampleAddress0} width={200} height={200} fill={`#000`} /></div>
-          <div className={styles.card}><SVGies address={exampleAddress4} width={200} height={200} fill={`#000`} /></div>
-          <div className={styles.card}><SVGies address={exampleAddress3} width={200} height={200} fill={`#000`} /></div>
-          <div className={styles.card}><SVGies address={exampleAddress8} width={200} height={200} fill={`#000`} /></div>
-
-          {/* <div className={styles.card}><SVGies address={exampleAddress5} width={200} height={200} /></div> */}
-        </div>
-
-        {/* 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div> */}
+        <footer className={styles.footer}>
+          <h2>Some example SVGies are</h2>
+          <div className={styles.grid}>
+            <div className={styles.card}><SVGies address={exampleAddress6} width={200} height={200} fill={`#000`} /></div>
+            <div className={styles.card}><SVGies address={exampleAddress2} width={200} height={200} fill={`#000`} /></div>
+            <div className={styles.card}><SVGies address={exampleAddress7} width={200} height={200} fill={`#000`} /></div>
+            <div className={styles.card}><SVGies address={exampleAddress9} width={200} height={200} fill={`#000`} /></div>
+            <div className={styles.card}><SVGies address={exampleAddress1} width={200} height={200} fill={`#000`} /></div>
+            <div className={styles.card}><SVGies address={exampleAddress0} width={200} height={200} fill={`#000`} /></div>
+            <div className={styles.card}><SVGies address={exampleAddress4} width={200} height={200} fill={`#000`} /></div>
+            <div className={styles.card}><SVGies address={exampleAddress3} width={200} height={200} fill={`#000`} /></div>
+            <div className={styles.card}><SVGies address={exampleAddress8} width={200} height={200} fill={`#000`} /></div>
+            {/* <div className={styles.card}><SVGies address={exampleAddress5} width={200} height={200} /></div> */}
+          </div>
+        </footer>
 
       </main>
 
-      {/* <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer> */}
     </div>
   )
 }
