@@ -1,14 +1,14 @@
 import { useState } from 'react'
 import { keccak256 } from "ethers/lib/utils"
 
-const SVGies = ({address, width, height}) => {
+const SVGies = ({address, width, height, fill}) => {
 
     const getRGBAString = (hexString) => {
         const data = hexString.length == 8 ? hexString : hexString.length == 6 ? hexString + 'ff' : 'ffffffff'
         const r = parseInt(data.slice(0, 2), 16)
         const g = parseInt(data.slice(2, 4), 16)
         const b = parseInt(data.slice(4, 6), 16)
-        const a = 0.5 + parseInt(data.slice(6, 8), 16) / 512
+        const a = 0.75 + parseInt(data.slice(6, 8), 16) / 512
         return `rgba(${r},${g},${b},${a})`
     }
 
@@ -79,11 +79,11 @@ const SVGies = ({address, width, height}) => {
 
             <radialGradient id={`${colors[0][0]}${colors[1][0]}`}>
                 <stop offset="0" stopColor={colors[0][1]} />
-                <stop offset=".95" stopColor={colors[1][1]} />
-                <stop offset="1" stopColor="transparent" />
+                <stop offset="1" stopColor={colors[1][1]} />
+                {/* <stop offset="1" stopColor="transparent" /> */}
             </radialGradient>
-            {/* <rect width="32" height="32" opacity=".5" fill={`url(#${colors[0][0]}${colors[1][0]})`}/> */}
-            <circle cy={16} cx={16} r={16} opacity=".5" fill={`url(#${colors[0][0]}${colors[1][0]})`}/>
+            <rect width="100%" height="100%" opacity=".5" fill={`url(#${colors[0][0]}${colors[1][0]})`}/>
+            {/* <circle cy={16} cx={16} r={16} opacity=".5" fill={`url(#${colors[0][0]}${colors[1][0]})`}/> */}
 
             <linearGradient id={`${colors[2][0]}${colors[3][0]}${colors[2][0]}`}>
                 <stop offset="0" stopColor={colors[2][1]} />

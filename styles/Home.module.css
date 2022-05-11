@@ -8,8 +8,12 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
+  justify-content: center;
   align-items: center;
+  background-color: #e0e0e0;
+}
+.card {
+  background-color: white;
 }
 
 .footer {
@@ -70,7 +74,7 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  max-width: 800px;
+  max-width: 900px;
 }
 
 .card {
@@ -113,4 +117,11 @@
     width: 100%;
     flex-direction: column;
   }
+}
+
+.SVGie {
+  border: 1px solid black;
+  border-radius: 50%;
+  padding: 0;
+  margin: 0;
 }
