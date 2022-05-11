@@ -53,7 +53,7 @@ const SVGies = ({ address, width, height, fill }) => {
 
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    useEffect(() => setAddr(address), [])
+    useEffect(() => address && address !== addr && setAddr(address), [address])
     useEffect(() => {
         // Split hex data into groups of 4 bytes to create rgba colors
         const getColors = (hexData) => {
