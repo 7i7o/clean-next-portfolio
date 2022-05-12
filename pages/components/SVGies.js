@@ -9,7 +9,7 @@ const SVGies = ({ address, width, height, fill }) => {
 
     const fixOpacity = (hexString) => {
         const data = hexString.length == 8 ? hexString : hexString.length == 6 ? hexString + 'ff' : 'ffffffff'
-        return data?.slice(0, 6) + parseInt((0.75 + parseInt(data?.slice(6, 8), 16) / 1024) * 256).toString(16)
+        return data?.slice(0, 6) + parseInt((parseInt(data?.slice(6, 8), 16) * 256 / 1024) + 191).toString(16)
     }
 
     // Creates a path from an array with all the control points defined
@@ -46,7 +46,10 @@ const SVGies = ({ address, width, height, fill }) => {
 
         if (addr) {
             let hash = keccak256(addr)
-            setC(getColors(hash))
+            console.log(hash)
+            let newColors = getColors(hash)
+            console.log(newColors)
+            setC(newColors)
             setPaths(getSPaths(addr))
         }
 
