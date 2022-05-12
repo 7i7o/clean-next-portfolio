@@ -18,6 +18,13 @@ const Home = () => {
   const exampleAddress8 = '0x0b29CF9b4D48BF75Bd1c2681cA07aB102F85c98C'; // 7i7o-domains
   const exampleAddress9 = '0xBE127507dA672f51492C416274470702F89c4918'; // Cobie
   const exampleAddress0 = '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266'; // HH #0
+  // const exampleAddress10 = '0x3352655300000000000000000000000000000000'; // 
+  // const exampleAddress11 = '0x123456789abcdef123456789abcdef123456789a'; // 
+  // const exampleAddress12 = '0xf60281bf4701989428fe7516d834342623199e2b'; // 
+  const exampleAddress10 = '0x0ed6cec17f860fb54e21d154b49daefd9ca04106'; // old.dhai
+  const exampleAddress11 = '0xd933a3ec19065dfaec5ccaa4bfd6cd1dd370d9f3'; // dhai
+  const exampleAddress12 = '0x806164c929ad3a6f4bd70c2370b3ef36c64deaa8'; // tranq
+  // const exampleAddress11 = '0xa592b977b98697ed0269b645af1d09289fae8948'; // manupir
 
 
   const { data: account } = useAccount()
@@ -91,6 +98,9 @@ const Home = () => {
             <div className={styles.card}><SVGies address={exampleAddress3} width={200} height={200} fill={`#000`} /></div>
             <div className={styles.card}><SVGies address={exampleAddress8} width={200} height={200} fill={`#000`} /></div>
             {/* <div className={styles.card}><SVGies address={exampleAddress5} width={200} height={200} /></div> */}
+            {/* <div className={styles.card}><SVGies address={exampleAddress10} width={200} height={200} fill={`#000`} /></div>
+            <div className={styles.card}><SVGies address={exampleAddress11} width={200} height={200} fill={`#000`} /></div>
+            <div className={styles.card}><SVGies address={exampleAddress12} width={200} height={200} fill={`#000`} /></div> */}
           </div>
         </footer>
 
