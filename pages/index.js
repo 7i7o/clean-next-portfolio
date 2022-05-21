@@ -45,7 +45,8 @@ const Home = () => {
           {(isError && <>Error Loading Account</>)}
           {(!isLoading && !isError && !data && <>Please Connect Wallet to Mint or View your SVGie</>)}
           {(!isLoading && !isError && data &&
-            <Center boxSize={240} bg='#ffffffcc' borderRadius={'.75em'}>
+            <Center boxSize={240} bg='#ffffffcc' borderRadius={'.75em'}
+              _hover={{ boxShadow: '0 0 8px #ff0080', bg: '#ffffffee' }}>
               <SVGies address={data?.address} width={200} height={200} fill={`#000`} />
             </Center>)}
         </Center>
@@ -70,11 +71,12 @@ const Home = () => {
         </Center>
 
         <Center pb='3em'>
-          <Wrap spacing="30px" justify='center' >
+          <Wrap spacing="30px" pt='10px' pb='10px' justify='center' >
             {wallets.map((w, i) => {
               return (
                 <WrapItem key={i}>
-                  <Center boxSize={240} bg='#ffffffcc' borderRadius={'.75em'}>
+                  <Center boxSize={240} bg='#ffffffcc' borderRadius={'.75em'}
+                    _hover={{ boxShadow: '0 0 8px #ff0080', bg: '#ffffffee' }}>
                     <SVGies address={w} width={200} height={200} fill={`#000`} />
                   </Center>
                 </WrapItem>
