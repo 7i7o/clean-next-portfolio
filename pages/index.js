@@ -41,15 +41,23 @@ const Home = () => {
           </VStack>
         </Center>
         <Center w='100%' h='24em' >
-          {(isLoading && <Skeleton><Box w='200' h='200'></Box></Skeleton>)}
+          {(isLoading &&
+            <Skeleton>
+              <Center
+                boxSize={340}
+                bg='#ffffffcc' borderRadius={'.75em'}
+                _hover={{ boxShadow: '0 0 8px #ff0080', bg: '#ffffffee' }}>
+                <Box w={300} h={300} />
+              </Center>
+            </Skeleton>)}
           {(isError && <>Error Loading Account</>)}
           {(!isLoading && !isError && !data && <>Please Connect Wallet to Mint or View your SVGie</>)}
           {(!isLoading && !isError && data &&
-            <Center 
+            <Center
               boxSize={340}
               bg='#ffffffcc' borderRadius={'.75em'}
               _hover={{ boxShadow: '0 0 8px #ff0080', bg: '#ffffffee' }}>
-              <SVGies address={data?.address} width={300} height={300} fill={`#000`} />
+              <SVGies address={data?.address} width={300} height={300} />
             </Center>)}
         </Center>
         <Center w='100%' h='6em' pb='2em'>
@@ -79,7 +87,7 @@ const Home = () => {
                 <WrapItem key={i}>
                   <Center boxSize={190} bg='#ffffffcc' borderRadius={'.75em'}
                     _hover={{ boxShadow: '0 0 8px #ff0080', bg: '#ffffffee' }}>
-                    <SVGies address={w} width={150} height={150} fill={`#000`} />
+                    <SVGies address={w} width={150} height={150} />
                   </Center>
                 </WrapItem>
               )
