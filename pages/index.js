@@ -1,4 +1,4 @@
-import { Box, Center, Divider, Heading, Skeleton, Stack, Text, VStack, Wrap, WrapItem } from '@chakra-ui/react'
+import { Box, Button, Center, Divider, Heading, HStack, Skeleton, Stack, Tag, Text, useToast, VStack, Wrap, WrapItem } from '@chakra-ui/react'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { useAccount } from 'wagmi'
 import Head from 'next/head'
@@ -9,6 +9,14 @@ import { wallets } from '../constants/wallets.js';
 const Home = () => {
 
   const { data, isError, isLoading } = useAccount()
+
+  const toast = useToast()
+  const toastStatus = 'info'
+
+  const nextPrice = 0;
+  const slowFactor = 0;
+  const totalSupply = 0;
+  const mintPrice = 0;
 
   return (
     <div>
@@ -32,15 +40,15 @@ const Home = () => {
         </Center>
         <Center>
           <VStack >
-            <Center pl='3em' pr='3em'>SVGies are a unique visual representation of your wallet address</Center>
-            <Center pl='3em' pr='3em'>You can only mint ONE because they are a 1:1 representation of your wallet</Center>
-            <Center pl='3em' pr='3em'>They are stored on-chain in the Polygon mainnet network</Center>
-            <Center pl='3em' pr='3em'>You can think of them as Blockies from the future</Center>
-            <Center pl='3em' pr='3em'>Drawn as generative art in a beautifully detailed and colorful SVG</Center>
-            <Center pl='3em' pr='3em'>Using Quadratic and Cubic Bézier curves and leveraging our brain&apos;s ability to remember vertical simmetry</Center>
+            <Center pl='3em' pr='3em' align={'center'}>SVGies are a unique visual representation of your wallet address</Center>
+            <Center pl='3em' pr='3em' align={'center'}>You can only mint ONE because they are a 1:1 representation of your wallet</Center>
+            <Center pl='3em' pr='3em' align={'center'}>They are stored on-chain in the Polygon mainnet network</Center>
+            <Center pl='3em' pr='3em' align={'center'}>You can think of them as Blockies from the future</Center>
+            <Center pl='3em' pr='3em' align={'center'}>Drawn as generative art in a beautifully detailed and colorful SVG</Center>
+            <Center pl='3em' pr='3em' align={'center'}>Using Quadratic and Cubic Bézier curves and leveraging our brain&apos;s ability to remember vertical simmetry</Center>
           </VStack>
         </Center>
-        <Center w='100%' h='24em' >
+        <Center w='100%' h='28em' >
           {(isLoading &&
             <Skeleton>
               <Center
@@ -53,12 +61,32 @@ const Home = () => {
           {(isError && <>Error Loading Account</>)}
           {(!isLoading && !isError && !data && <>Please Connect Wallet to Mint or View your SVGie</>)}
           {(!isLoading && !isError && data &&
-            <Center
-              boxSize={340}
-              bg='#ffffffcc' borderRadius={'.75em'}
-              _hover={{ boxShadow: '0 0 8px #ff0080', bg: '#ffffffee' }}>
-              <SVGies address={data?.address} width={300} height={300} />
-            </Center>)}
+            <VStack >
+              <Center
+                boxSize={340}
+                bg='#ffffffcc'
+                borderRadius={'.75em'}
+                _hover={{ boxShadow: '0 0 8px #ff0080', bg: '#ffffffee' }}>
+                <SVGies address={data?.address} width={300} height={300} />
+              </Center>
+              <Center >
+                <Button
+                  // onClick={() => { window.alert('coming soon') }}
+                  onClick={() =>
+                    toast({
+                      title: `Coming Soon`,
+                      status: toastStatus,
+                      isClosable: true,
+                    }) }
+                >
+                  Mint ({mintPrice} MATIC)
+                </Button>
+              </Center>
+              <HStack >
+                  <Tag>Next Price in {nextPrice * slowFactor - totalSupply} mints</Tag>
+                  <Tag>Next Price: {nextPrice}</Tag>
+              </HStack>
+            </VStack>)}
         </Center>
         <Center w='100%' h='6em' pb='2em'>
           <ConnectButton
