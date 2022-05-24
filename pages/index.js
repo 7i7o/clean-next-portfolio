@@ -5,6 +5,8 @@ import Head from 'next/head'
 
 import SVGies from './components/SVGies';
 import { wallets } from '../constants/wallets.js';
+import SVGie from './components/SVGie';
+import { ethers } from 'ethers';
 
 const Home = () => {
 
@@ -43,50 +45,58 @@ const Home = () => {
             <Center pl='3em' pr='3em' align={'center'}>SVGies are a unique visual representation of your wallet address</Center>
             <Center pl='3em' pr='3em' align={'center'}>You can only mint ONE because they are a 1:1 representation of your wallet</Center>
             <Center pl='3em' pr='3em' align={'center'}>They are stored on-chain in the Polygon mainnet network</Center>
-            <Center pl='3em' pr='3em' align={'center'}>You can think of them as Blockies from the future</Center>
+            <Center pl='3em' pr='3em' align={'center'}>You can think of them as Blockies that evolved to SVGs (Scalable Vector Graphics never get pixelated)</Center>
             <Center pl='3em' pr='3em' align={'center'}>Drawn as generative art in a beautifully detailed and colorful SVG</Center>
             <Center pl='3em' pr='3em' align={'center'}>Using Quadratic and Cubic Bézier curves and leveraging our brain&apos;s ability to remember vertical simmetry</Center>
+            <Center pl='3em' pr='3em' align={'center'}>It is tied to your wallet and cannot be transfered</Center>
           </VStack>
         </Center>
-        <Center w='100%' h='28em' >
-          {(isLoading &&
-            <Skeleton>
-              <Center
-                boxSize={340}
-                bg='#ffffffcc' borderRadius={'.75em'}
-                _hover={{ boxShadow: '0 0 8px #ff0080', bg: '#ffffffee' }}>
-                <Box w={300} h={300} />
-              </Center>
-            </Skeleton>)}
-          {(isError && <>Error Loading Account</>)}
-          {(!isLoading && !isError && !data && <>Please Connect Wallet to Mint or View your SVGie</>)}
-          {(!isLoading && !isError && data &&
-            <VStack >
-              <Center
-                boxSize={340}
-                bg='#ffffffcc'
-                borderRadius={'.75em'}
-                _hover={{ boxShadow: '0 0 8px #ff0080', bg: '#ffffffee' }}>
-                <SVGies address={data?.address} width={300} height={300} />
-              </Center>
-              <Center >
-                <Button
-                  // onClick={() => { window.alert('coming soon') }}
-                  onClick={() =>
-                    toast({
-                      title: `Coming Soon`,
-                      status: toastStatus,
-                      isClosable: true,
-                    }) }
+        <Center w='100%' h='22em' >
+          {(
+            isLoading ?
+              <Skeleton>
+                <Center
+                  boxSize={240}
+                  bg='#ffffffcc'
+                  borderRadius={'.75em'}
+                  _hover={{ boxShadow: '0 0 8px #ff0080', bg: '#ffffffee' }}
                 >
-                  Mint ({mintPrice} MATIC)
-                </Button>
-              </Center>
-              <HStack >
-                  <Tag>Next Price in {nextPrice * slowFactor - totalSupply} mints</Tag>
-                  <Tag>Next Price: {nextPrice}</Tag>
-              </HStack>
-            </VStack>)}
+                  <Box w={200} h={200} />
+                </Center>
+              </Skeleton>
+              : isError ?
+                <>Error Loading Account</>
+                : !data ?
+                  <>Please Connect Wallet to Mint or View your SVGie</>
+                  : <VStack >
+                    {/* <Center
+                      boxSize={340}
+                      bg='#ffffffcc'
+                      borderRadius={'.75em'}
+                      _hover={{ boxShadow: '0 0 8px #ff0080', bg: '#ffffffee' }}
+                    > */}
+                      {/* <SVGies address={data?.address} width={300} height={300} /> */}
+                      <SVGie address={data?.address} tokenId={ethers.BigNumber.from(data?.address)} width={300} height={300} />
+                    {/* </Center> */}
+                    <Center >
+                      <Button
+                        // onClick={() => { window.alert('coming soon') }}
+                        onClick={() =>
+                          toast({
+                            title: `Coming Soon`,
+                            status: toastStatus,
+                            isClosable: true,
+                          })}
+                      >
+                        Mint ({mintPrice} MATIC)
+                      </Button>
+                    </Center>
+                    <HStack >
+                      <Tag>Next Price in {nextPrice * slowFactor - totalSupply} mints</Tag>
+                      <Tag>Next Price: {nextPrice} MATIC</Tag>
+                    </HStack>
+                  </VStack>
+          )}
         </Center>
         <Center w='100%' h='6em' pb='2em'>
           <ConnectButton

@@ -26,7 +26,7 @@ const SVGies = ({ address, width, height, fill }) => {
         path += `Q${2 * arr[arr.length - 2] - arr[arr.length - 4]} ${2 * arr[arr.length - 1] - arr[arr.length - 3]} ${arr[0]} ${arr[1]}z`
         return path
     }
-    
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => address && address !== addr && setAddr(address), [address])
     useEffect(() => {
@@ -46,9 +46,9 @@ const SVGies = ({ address, width, height, fill }) => {
 
         if (addr) {
             let hash = keccak256(addr)
-            console.log(hash)
+            // console.log(hash)
             let newColors = getColors(hash)
-            console.log(newColors)
+            // console.log(newColors)
             setC(newColors)
             setPaths(getSPaths(addr))
         }

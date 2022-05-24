@@ -1,0 +1,2 @@
+// export const contractNameOrAddress = '0x0c6C2a028aB0FCB9e60f82Ce14703eeF40D15A48'; // Polygon Basic Price
+export const contractNameOrAddress = '0x2cd97B4892026A9D3f165e99c15Fd3A05c53E3e4'; // Mumbai (Fibonacci Price)

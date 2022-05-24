@@ -7,7 +7,8 @@ import { chain, createClient, WagmiConfig, WagmiProvider } from 'wagmi';
 
 const { chains, provider } = configureChains(
   // [chain.mainnet, chain.polygon, chain.optimism, chain.arbitrum],
-  [chain.polygon],
+  // [chain.polygon],
+  [chain.polygonMumbai],
   [apiProvider.alchemy(process.env.ALCHEMY_ID), apiProvider.fallback()]
 );
 
