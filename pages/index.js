@@ -143,7 +143,7 @@ const Home = ({ walletTheme, setWalletTheme }) => {
             fontSize='4xl'
             fontWeight='extrabold'
             // textShadow='0 0 10px #ff0080'
-            textShadow='0 0 10px #7928ca'
+            textShadow={colorMode === 'light' ? '0 0 10px #7928ca' : '0 0 10px #ff0080' }
           >
             SVGies Examples
           </Heading>
