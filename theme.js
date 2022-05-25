@@ -25,10 +25,10 @@ const Card = {
   },
   variants: {
     shadowLight: {
-      bg: '#00000044',
+      bg: '#00000033',
       _hover: {
         boxShadow: '0 0 8px #7928CA',
-        bg: '#00000022',
+        bg: '#00000011',
       },
     },
     shadowDark: {

@@ -107,8 +107,6 @@ const Home = ({ walletTheme, setWalletTheme }) => {
                       tokenId={ethers.BigNumber.from(data?.address)}
                       size='xl'
                       variant={colorMode === 'light' ? 'shadowLight' : 'shadowDark'}
-                      // width={300}
-                      // height={300}
                     />
                     <Center >
                       <Button
