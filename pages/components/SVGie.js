@@ -17,29 +17,57 @@ const SVGie = (props) => {
 
     const [decodedURIImage, setDecodedURIImage] = useState('')
 
+    // const [svgieData, setSvgieData] = useState('')
+    // const [isError, setIsError] = useState(false)
+    // const [isLoading, setIsLoading] = useState(true)
+
+
     const toast = useToast()
-    const [tokenURI, setTokenURI] = useState('')
+    const showToast = (title, status = 'info') => toast({ title, status, isClosable: true })
 
     const contractInfo = { addressOrName: contractNameOrAddress, contractInterface: contractABI.abi, }
 
-    // const { data: balance, isError: isErrorBalance, isLoading: isLoadingBalance, isFetched } =
-    //     useContractRead(contractInfo, 'balanceOf', { args: address })
-
-    const { data, error, isError, isLoading, isFetched } =
-        useContractRead(contractInfo, 'tokenURI', { args: tokenId, enabled: true })
-
-    const showToast = (title, status = 'info') => toast({ title, status, isClosable: true })
+    const { data: balance, error: errorBalance, isError: isErrorBalance, isLoading: isLoadingBalance, isFetched: isFetchedBalance } =
+        useContractRead(contractInfo, 'balanceOf', { args: address, enabled: true })
 
     useEffect(() => {
-        if (isLoading || !isFetched) return;
+        if (isLoadingBalance || !isFetchedBalance) return;
 
-        if (isError) {
-            showToast(`Error loading SVGie`, 'error')
-            console.log(error)
+        if (isErrorBalance) {
+            // showToast(`Couldn't load balancce`, 'error')
+            console.log(errorBalance)
             return;
         }
+        
+        if (!balance) {
+            showToast('You have not minted yours!', 'error')
+            console.log(`balanceOf ${address} is 0`)
+            return;
+        }
+        
+        // console.log(contractRead)
+        // setSvgieData(contractRead)
+        
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [balance, isErrorBalance, isLoadingBalance, isFetchedBalance]);
+    
+    
+    const {data, error, isError, isLoading, isFetched } = 
+        useContractRead(contractInfo, 'tokenURI', { args: tokenId, enabled: false })
 
-        // console.log('TokenId: ', tokenId.toString())
+    useEffect(() => {
+        // const {data, error, isError, isLoading, isFetched } = svgieData
+
+        if (isLoading || !isFetched) return;
+
+        // setIsLoading(false);
+
+        if (isError) {
+            // showToast(`Couldn't load SVGie`, 'error')
+            console.log(error)
+            // setIsError(error)
+            return;
+        }
 
         if (!data) {
             showToast('No Data on SVGie retrieved!', 'error')
@@ -50,8 +78,9 @@ const SVGie = (props) => {
         const json = JSON.parse(window.atob(data.substring(data.indexOf(',') + 1)));
         const decodedImg = window.atob(json.image.substring(json.image.indexOf(',') + 1));
         setDecodedURIImage(decodedImg);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [data, isError, isLoading]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [data, error, isError, isFetched, isLoading]);
 
 
     return (
@@ -59,10 +88,10 @@ const SVGie = (props) => {
             size={size}
             variant={variant}
         >
-            {isError ?
+            {!balance || isError ?
                 // <Center>You have not minted your SVGie yet</Center>
                 <Center align='center' color='#303030' textShadow='0 0 3px #cccccc' >
-                    No SVGie found!<br />Did you mint yours?
+                    No SVGie found! 😢<br />Did you mint yours?
                 </Center>
                 :
                 isLoading ?
