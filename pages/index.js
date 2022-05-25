@@ -35,9 +35,9 @@ const Home = ({ walletTheme, setWalletTheme }) => {
   const { data: nextPriceBN } = useContractRead(contractInfo, 'getNextPrice', {})
   const { data: slowFactorBN } = useContractRead(contractInfo, 'getSlowFactor', {})
   const { data: totalSupplyBN } = useContractRead(contractInfo, 'getTotalSupply', {})
-  const { data: mintActiveResult } = useContractRead(contractInfo, 'getMintActive', {})
+  const { data: mintActiveResult } = useContractRead(contractInfo, 'isMintActive', {})
   const { data: mintTx, error: mintError, isError: mintIsError, isLoading: mintIsLoading, write } =
-    useContractWrite(contractInfo, 'safeMint', { args: [data?.address] })
+    useContractWrite(contractInfo, 'safeMint', { args: [data?.address], value: mintPriceBN })
 
   const col = {
     accent: useColorModeValue('svgieLight.accent', 'svgieDark.accent'),
