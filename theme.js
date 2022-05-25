@@ -16,11 +16,11 @@ const Card = {
     },
     md: {
       boxSize: 240,
-      borderRadius: 5,
+      borderRadius: 11,
     },
     sm: {
-      boxSize: 170,
-      borderRadius: 3,
+      boxSize: 190,
+      borderRadius: 8,
     },
   },
   variants: {

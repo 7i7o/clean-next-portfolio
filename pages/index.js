@@ -156,15 +156,12 @@ const Home = ({ walletTheme, setWalletTheme }) => {
             {wallets.map((w, i) => {
               return (
                 <WrapItem key={i}>
-                  {/* <Center boxSize={190} bg={col.boxBg} borderRadius={'.75em'}
-                    _hover={{ boxShadow: `0 0 8px ${col.accent}`, bg: col.boxBgHover }}> */}
                   <Card
                     size='sm'
-                    variant='shadowDark'
+                    variant={colorMode === 'light' ? 'shadowLight' : 'shadowDark'}
                   >
                     <SVGies className='SVGiejs' address={w} width={150} height={150} />
                   </Card>
-                  {/* </Center> */}
                 </WrapItem>
               )
             })}
