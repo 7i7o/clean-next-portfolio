@@ -53,7 +53,7 @@ const SVGie = (props) => {
     
     
     const {data, error, isError, isLoading, isFetched } = 
-        useContractRead(contractInfo, 'tokenURI', { args: tokenId, enabled: false })
+        useContractRead(contractInfo, 'tokenURI', { args: tokenId, enabled: true })
 
     useEffect(() => {
         // const {data, error, isError, isLoading, isFetched } = svgieData
@@ -78,6 +78,7 @@ const SVGie = (props) => {
         const json = JSON.parse(window.atob(data.substring(data.indexOf(',') + 1)));
         const decodedImg = window.atob(json.image.substring(json.image.indexOf(',') + 1));
         setDecodedURIImage(decodedImg);
+        console.log(decodedURIImage)
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data, error, isError, isFetched, isLoading]);

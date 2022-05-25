@@ -99,6 +99,7 @@ const Home = ({ walletTheme, setWalletTheme }) => {
     //   isClosable: true,
     // })
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mintTx, mintError, mintIsError, mintIsLoading])
 
   return (
