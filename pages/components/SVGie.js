@@ -1,13 +1,19 @@
-import { Box, Center, Skeleton } from '@chakra-ui/react'
+import { Box, Center, Skeleton, useToast, useStyleConfig } from '@chakra-ui/react'
+
 import { useEffect, useState } from 'react'
 import { useContractRead } from 'wagmi'
 import { contractNameOrAddress } from "../../constants/contract"
 import contractABI from "../../constants/contractABI.json"
 import InlineSVG from 'svg-inline-react';
-import { useToast } from '@chakra-ui/react';
 import { ethers } from 'ethers'
+import Card from './Card'
 // 0x0b29CF9b4D48BF75Bd1c2681cA07aB102F85c98C
-const SVGie = ({ address, tokenId, width, height }) => {
+// const SVGie = ({ address, tokenId, width, height }) => {
+const SVGie = (props) => {
+
+    const { address, tokenId, width, height, variant, size, ...rest } = props
+
+    // const styles = useStyleConfig('SVGie', { size, variant })
 
     const [decodedURIImage, setDecodedURIImage] = useState('')
 
@@ -28,16 +34,16 @@ const SVGie = ({ address, tokenId, width, height }) => {
         if (isLoading || !isFetched) return;
 
         if (isError) {
+            showToast(`Error loading SVGie`, 'error')
             console.log(error)
-            showToast(`No SVGie found!`, 'error')
             return;
         }
 
-        console.log('TokenId: ', tokenId.toString())
+        // console.log('TokenId: ', tokenId.toString())
 
         if (!data) {
-            showToast('No Data!', 'error')
-            console.log('No Data!')
+            showToast('No Data on SVGie retrieved!', 'error')
+            console.log('No Data on SVGie retrieved!')
             return;
         }
 
@@ -49,32 +55,23 @@ const SVGie = ({ address, tokenId, width, height }) => {
 
 
     return (
-        isError ?
-            // <Center>You have not minted your SVGie yet</Center>
-            <Center align='center' color='#303030'>No SVGie found!<br/>Did you mint yours?</Center>
-            :
-            isLoading ?
-                <Skeleton>
-                    <Center
-                        boxSize={240}
-                        bg='#ffffffcc'
-                        borderRadius={'.75em'}
-                        _hover={{ boxShadow: '0 0 8px #ff0080', bg: '#ffffffee' }}
-                    >
-                        <Box w={200} h={200} >
-                            Loading...
-                        </Box>
-                    </Center>
-                </Skeleton>
-                :
-                <Center
-                    boxSize={240}
-                    bg='#ffffffcc'
-                    borderRadius={'.75em'}
-                    _hover={{ boxShadow: '0 0 8px #ff0080', bg: '#ffffffee' }}
-                >
-                    <InlineSVG src={decodedURIImage} element='div' className='svgieContainer' width={width} height={height} />
+        <Card
+            size={size}
+            variant={variant}
+        >
+            {isError ?
+                // <Center>You have not minted your SVGie yet</Center>
+                <Center align='center' color='#303030' textShadow='0 0 3px #cccccc' >
+                    No SVGie found!<br />Did you mint yours?
                 </Center>
+                :
+                isLoading ?
+                    <Skeleton>
+                        Loading...
+                    </Skeleton>
+                    :
+                    <InlineSVG src={decodedURIImage} element='span' width={width} height={height} />}
+        </Card>
     )
 
 }

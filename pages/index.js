@@ -1,4 +1,5 @@
-import { Box, Button, Center, Divider, Heading, HStack, Skeleton, Stack, Tag, Text, useToast, VStack, Wrap, WrapItem } from '@chakra-ui/react'
+import { Box, Button, Center, Divider, Heading, HStack, IconButton, Skeleton, Tag, useColorMode, useColorModeValue, useToast, VStack, Wrap, WrapItem } from '@chakra-ui/react'
+import { MoonIcon, SunIcon } from '@chakra-ui/icons'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { useAccount } from 'wagmi'
 import Head from 'next/head'
@@ -7,10 +8,14 @@ import SVGies from './components/SVGies';
 import { wallets } from '../constants/wallets.js';
 import SVGie from './components/SVGie';
 import { ethers } from 'ethers';
+import { useEffect } from 'react';
+import Card from './components/Card'
 
-const Home = () => {
+const Home = ({ walletTheme, setWalletTheme }) => {
 
   const { data, isError, isLoading } = useAccount()
+
+  const { colorMode, toggleColorMode } = useColorMode()
 
   const toast = useToast()
   const toastStatus = 'info'
@@ -19,6 +24,20 @@ const Home = () => {
   const slowFactor = 0;
   const totalSupply = 0;
   const mintPrice = 0;
+
+  const col = {
+    placeholder: useColorModeValue('svgieLight.placeholder', 'svgieDark.placeholder'),
+    boxBg: useColorModeValue('svgieLight.boxBg', 'svgieDark.boxBg'),
+    boxBgHover: useColorModeValue('svgieLight.boxBgHover', 'svgieDark.boxBgHover'),
+    accent: useColorModeValue('svgieLight.accent', 'svgieDark.accent'),
+    accent2: useColorModeValue('svgieLight.accent2', 'svgieDark.accent2'),
+  }
+
+  useEffect(() => {
+    if (!colorMode) return;
+    setWalletTheme(colorMode)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [colorMode])
 
   return (
     <div>
@@ -29,9 +48,22 @@ const Home = () => {
       </Head>
 
       <main>
+        <Box align='end' >
+          <IconButton
+            rounded='full'
+            aria-label='Toggle dark mode'
+            bgColor='transparent'
+            icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
+            onClick={toggleColorMode}
+            _hover={{
+              bgColor: 'transparent',
+            }}
+          />
+        </Box>
+
         <Center w='100%' h='10em' >
           <Heading
-            bgGradient={'linear(to-b, #FF0080, #7928CA)'}
+            bgGradient={`linear(to-b, ${col.accent2}, ${col.accent})`}
             bgClip='text'
             fontSize='7xl'
             fontWeight='extrabold'
@@ -40,6 +72,7 @@ const Home = () => {
             SVGies
           </Heading>
         </Center>
+
         <Center>
           <VStack >
             <Center pl='3em' pr='3em' align={'center'}>SVGies are a unique visual representation of your wallet address</Center>
@@ -51,17 +84,17 @@ const Home = () => {
             <Center pl='3em' pr='3em' align={'center'}>It is tied to your wallet and cannot be transfered</Center>
           </VStack>
         </Center>
-        <Center w='100%' h='22em' >
+        <Center w='100%' h='28em' >
           {(
             isLoading ?
               <Skeleton>
                 <Center
                   boxSize={240}
-                  bg='#ffffffcc'
                   borderRadius={'.75em'}
-                  _hover={{ boxShadow: '0 0 8px #ff0080', bg: '#ffffffee' }}
+                  bg={col.boxBg}
+                  _hover={{ boxShadow: `0 0 8px ${col.accent}`, bg: col.boxBgHover }}
                 >
-                  <Box w={200} h={200} />
+                  <Box w={200} h={200} bg={col.placeholder} />
                 </Center>
               </Skeleton>
               : isError ?
@@ -69,15 +102,14 @@ const Home = () => {
                 : !data ?
                   <>Please Connect Wallet to Mint or View your SVGie</>
                   : <VStack >
-                    {/* <Center
-                      boxSize={340}
-                      bg='#ffffffcc'
-                      borderRadius={'.75em'}
-                      _hover={{ boxShadow: '0 0 8px #ff0080', bg: '#ffffffee' }}
-                    > */}
-                      {/* <SVGies address={data?.address} width={300} height={300} /> */}
-                      <SVGie address={data?.address} tokenId={ethers.BigNumber.from(data?.address)} width={300} height={300} />
-                    {/* </Center> */}
+                    <SVGie
+                      address={data?.address}
+                      tokenId={ethers.BigNumber.from(data?.address)}
+                      size='xl'
+                      variant={colorMode === 'light' ? 'shadowLight' : 'shadowDark'}
+                      // width={300}
+                      // height={300}
+                    />
                     <Center >
                       <Button
                         // onClick={() => { window.alert('coming soon') }}
@@ -105,6 +137,7 @@ const Home = () => {
             showBalance={{ smallScreen: false, largeScreen: true, }}
           />
         </Center>
+
         <Divider />
 
         <Center h='7em'>
@@ -123,10 +156,15 @@ const Home = () => {
             {wallets.map((w, i) => {
               return (
                 <WrapItem key={i}>
-                  <Center boxSize={190} bg='#ffffffcc' borderRadius={'.75em'}
-                    _hover={{ boxShadow: '0 0 8px #ff0080', bg: '#ffffffee' }}>
-                    <SVGies address={w} width={150} height={150} />
-                  </Center>
+                  {/* <Center boxSize={190} bg={col.boxBg} borderRadius={'.75em'}
+                    _hover={{ boxShadow: `0 0 8px ${col.accent}`, bg: col.boxBgHover }}> */}
+                  <Card
+                    size='sm'
+                    variant='shadowDark'
+                  >
+                    <SVGies className='SVGiejs' address={w} width={150} height={150} />
+                  </Card>
+                  {/* </Center> */}
                 </WrapItem>
               )
             })}
