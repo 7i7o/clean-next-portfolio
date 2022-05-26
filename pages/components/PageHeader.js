@@ -7,7 +7,7 @@ const PageHeader = (props) => {
 
     return (
         <>
-            <Center w='100%' h={32} >
+            <Center w='100%' h={20} >
                 <Heading
                     size='lg'
                     variant={variant}
@@ -18,13 +18,17 @@ const PageHeader = (props) => {
 
             <Center>
                 <VStack >
-                    <Center pl='3em' pr='3em' align={'center'}>SVGies are a unique visual representation of your wallet address</Center>
-                    <Center pl='3em' pr='3em' align={'center'}>You can only mint ONE because they are a 1:1 representation of your wallet</Center>
-                    <Center pl='3em' pr='3em' align={'center'}>They are stored on-chain in the Polygon mainnet network</Center>
-                    <Center pl='3em' pr='3em' align={'center'}>You can think of them as Blockies that evolved to SVGs (Scalable Vector Graphics never get pixelated)</Center>
-                    <Center pl='3em' pr='3em' align={'center'}>Drawn as generative art in a beautifully detailed and colorful SVG</Center>
-                    <Center pl='3em' pr='3em' align={'center'}>Using Quadratic and Cubic Bézier curves and leveraging our brain&apos;s ability to remember vertical simmetry</Center>
-                    <Center pl='3em' pr='3em' align={'center'}>It is tied to your wallet and cannot be transfered</Center>
+                    <Center px='3em' pt='1em'>
+                        <p align='center' >
+                            SVGies are a unique visual representation of your wallet address <br />
+                            You can only mint ONE because they are a 1:1 representation of your wallet <br />
+                            They are stored on-chain in the Polygon mainnet network <br />
+                            You can think of them as Blockies that evolved to SVGs (Scalable Vector Graphics never get pixelated) <br />
+                            Drawn as generative art in a beautifully detailed and colorful SVG <br />
+                            Using Quadratic and Cubic Bézier curves and leveraging our brain&apos;s ability to remember vertical simmetry <br />
+                            It is tied to your wallet and cannot be transfered
+                        </p>
+                    </Center>
                 </VStack>
             </Center>
 

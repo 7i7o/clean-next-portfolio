@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { Button, Center, HStack, Skeleton, Tag, useColorModeValue, useToast, VStack } from "@chakra-ui/react"
-import { useAccount, useContractRead, useContractWrite } from "wagmi"
+import { useAccount, useContractRead, useContractWrite, useWaitForTransaction } from "wagmi"
 import { BigNumber, ethers } from 'ethers';
 
 import Card from "./Card"
@@ -29,8 +29,12 @@ const NFTManager = () => {
     const { data: slowFactorBN } = useContractRead(contractInfo, 'getSlowFactor', {})
     const { data: totalSupplyBN } = useContractRead(contractInfo, 'getTotalSupply', {})
     const { data: mintActiveResult } = useContractRead(contractInfo, 'isMintActive', {})
-    const { data: mintTx, error: mintError, isError: mintIsError, isLoading: mintIsLoading, write } =
-        useContractWrite(contractInfo, 'safeMint', { args: [data?.address], value: mintPriceBN })
+    // const contractWrite =
+    const { data: mintTxReceipt, error: mintError, isError: mintIsError, isLoading: mintIsLoading, write } =
+        useContractWrite(contractInfo, 'safeMint', { args: [data?.address] })
+    // useContractWrite(contractInfo, 'safeMint', { args: [data?.address], value: BigNumber.from(mintPriceBN?mintPriceBN:0) })
+    // const { data: mintTxReceipt, error: mintError, isError: mintIsError, isLoading: mintIsLoading } =
+    //     useWaitForTransaction({ wait: contractWrite.data?.wait })
 
     useEffect(() => {
         // console.log('price is: ', ethers.utils.formatEther(mintPriceBN))
@@ -63,9 +67,9 @@ const NFTManager = () => {
     }, [mintActiveResult])
 
     useEffect(() => {
-        if (isLoading) return;
+        if (mintIsLoading) return;
 
-        if (isError) {
+        if (mintIsError) {
             console.log('Minting Error: ', mintError)
             toast({
                 title: `Error minting your SVGie`,
@@ -74,9 +78,9 @@ const NFTManager = () => {
             })
         }
 
-        if (!mintTx) return
+        if (!mintTxReceipt) return
 
-        console.log(mintTx)
+        console.log(mintTxReceipt)
         // toast({
         //   title: `You minted your SVGie!`,
         //   status: 'success',
@@ -84,7 +88,7 @@ const NFTManager = () => {
         // })
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [mintTx, mintError, mintIsError, mintIsLoading])
+    }, [mintTxReceipt, mintError, mintIsError, mintIsLoading])
 
     return (
         <Center w='100%' h='32rem' >
@@ -118,6 +122,7 @@ const NFTManager = () => {
                                 </Center>
                             </Card>
                             : <VStack >
+                                {/* <>Account: {data?.address}</> */}
                                 <SVGie
                                     address={data?.address}
                                     tokenId={ethers.BigNumber.from(data?.address)}
@@ -133,7 +138,9 @@ const NFTManager = () => {
                                             console.log(ethers.utils.formatEther(mintPriceBN))
                                             console.log(BigNumber.from(mintPriceBN).toString())
 
-                                            write({ args: [data?.address], value: BigNumber.from(mintPriceBN) })
+                                            // write({ args: [data?.address], value: BigNumber.from(mintPriceBN) })
+                                            write()
+                                            // contractWrite.write()
                                         }
                                             // toast({
                                             //   title: `Coming Soon`,
@@ -142,7 +149,7 @@ const NFTManager = () => {
                                             // })
                                         }
                                     >
-                                        Mint ({mintActive ? mintPrice : 'SOON'})
+                                        Mint ({mintActive ? `${mintPrice} MATIC` : 'SOON'})
                                     </Button>
                                 </Center>
                                 <HStack >

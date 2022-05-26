@@ -1,4 +1,4 @@
-import { Divider } from '@chakra-ui/react'
+import { Center, Divider, Flex, IconButton, Spacer, useColorMode } from '@chakra-ui/react'
 import Head from 'next/head'
 
 import PageHeader from './components/PageHeader'
@@ -7,10 +7,17 @@ import Examples from './components/Examples'
 import Footer from './components/Footer'
 import WalletConnectButton from './components/WalletConnectButton'
 import NFTManager from './components/NFTManager';
+import { ConnectButton } from '@rainbow-me/rainbowkit'
+import { MoonIcon, SunIcon } from '@chakra-ui/icons'
+import { useEffect } from 'react'
 
 const Home = (props) => {
 
   const { setWalletTheme } = props
+  const { colorMode, toggleColorMode } = useColorMode()
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => { setWalletTheme(colorMode) }, [colorMode])
 
   return (
     <div>
@@ -21,10 +28,27 @@ const Home = (props) => {
       </Head>
 
       <main>
-        <ThemeSwitcher setWalletTheme={setWalletTheme} />
+        <Flex h={14} alignItems='center'>
+          <Spacer />
+          <ConnectButton
+            // accountStatus={{ smallScreen: 'avatar', largeScreen: 'address', }}
+            // chainStatus={{ smallScreen: 'icon', largeScreen: 'name', }}
+            // showBalance={{ smallScreen: false, largeScreen: true, }}
+          />
+          <IconButton
+            mx='.5em'
+            rounded='full'
+            aria-label='Toggle dark mode'
+            bgColor='transparent'
+            icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
+            onClick={toggleColorMode}
+            _hover={{
+              bgColor: 'transparent',
+            }}
+          />
+        </Flex>
         <PageHeader />
         <NFTManager />
-        <WalletConnectButton />
         <Divider />
         <Examples />
         <Divider />
