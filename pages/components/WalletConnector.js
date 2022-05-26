@@ -1,8 +1,10 @@
+import React from 'react';
+
 import { useColorModeValue } from "@chakra-ui/react";
 
+import { chain, createClient, WagmiProvider } from 'wagmi';
 import { apiProvider, configureChains, getDefaultWallets, RainbowKitProvider, lightTheme, darkTheme } from '@rainbow-me/rainbowkit';
 import '@rainbow-me/rainbowkit/styles.css';
-import { chain, createClient, WagmiProvider } from 'wagmi';
 
 const { chains, provider } = configureChains(
     // [chain.mainnet, chain.polygon, chain.optimism, chain.arbitrum],
