@@ -1,9 +1,14 @@
 import { MoonIcon, SunIcon } from "@chakra-ui/icons"
 import { Flex, IconButton, Spacer, useColorMode } from "@chakra-ui/react"
+import { useEffect } from "react"
 
-const ThemeSwitcher = () => {
+const ThemeSwitcher = (props) => {
 
+    const { setWalletTheme } = props
     const { colorMode, toggleColorMode } = useColorMode()
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect(() => { setWalletTheme(colorMode) }, [colorMode])
 
     return (
         <Flex>

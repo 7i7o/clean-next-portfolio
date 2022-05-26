@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 import { chain, createClient, WagmiProvider } from 'wagmi';
 import { apiProvider, configureChains, getDefaultWallets, RainbowKitProvider, lightTheme, darkTheme } from '@rainbow-me/rainbowkit';
 import '@rainbow-me/rainbowkit/styles.css';
