@@ -1,12 +1,10 @@
-import { Center, Divider, Flex, IconButton, Spacer, useColorMode } from '@chakra-ui/react'
+import { Divider, Flex, IconButton, Spacer, useColorMode } from '@chakra-ui/react'
 import Head from 'next/head'
 
 import PageHeader from './components/PageHeader'
-import ThemeSwitcher from './components/ThemeSwitcher'
+import NFTManager from './components/NFTManager';
 import Examples from './components/Examples'
 import Footer from './components/Footer'
-import WalletConnectButton from './components/WalletConnectButton'
-import NFTManager from './components/NFTManager';
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { MoonIcon, SunIcon } from '@chakra-ui/icons'
 import { useEffect } from 'react'
@@ -31,9 +29,9 @@ const Home = (props) => {
         <Flex h={14} alignItems='center'>
           <Spacer />
           <ConnectButton
-            // accountStatus={{ smallScreen: 'avatar', largeScreen: 'address', }}
-            // chainStatus={{ smallScreen: 'icon', largeScreen: 'name', }}
-            // showBalance={{ smallScreen: false, largeScreen: true, }}
+          // accountStatus={{ smallScreen: 'avatar', largeScreen: 'address', }}
+          // chainStatus={{ smallScreen: 'icon', largeScreen: 'name', }}
+          // showBalance={{ smallScreen: false, largeScreen: true, }}
           />
           <IconButton
             mx='.5em'
