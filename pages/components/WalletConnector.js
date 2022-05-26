@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { useColorModeValue } from "@chakra-ui/react";
 
 import { chain, createClient, WagmiProvider } from 'wagmi';
 import { apiProvider, configureChains, getDefaultWallets, RainbowKitProvider, lightTheme, darkTheme } from '@rainbow-me/rainbowkit';
 import '@rainbow-me/rainbowkit/styles.css';
 
+import { useColorModeValue } from "@chakra-ui/react";
 
 const WalletConnector = ({ Component, pageProps }) => {
     const { chains, provider } = configureChains(
@@ -16,10 +16,10 @@ const WalletConnector = ({ Component, pageProps }) => {
     );
     const { connectors } = getDefaultWallets({ appName: 'SVGies', chains });
     const wagmiClient = createClient({ autoConnect: true, connectors, provider })
-    const walletTheme = useColorModeValue(lightTheme(), darkTheme())
+    const walletTheme = useColorModeValue(lightTheme, darkTheme)
     return (
         <WagmiProvider client={wagmiClient}>
-            <RainbowKitProvider chains={chains} theme={walletTheme} >
+            <RainbowKitProvider chains={chains} theme={walletTheme()} >
                 <Component {...pageProps} />
             </RainbowKitProvider>
         </WagmiProvider>
