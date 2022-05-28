@@ -8,14 +8,15 @@ import Footer from './components/Footer'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { MoonIcon, SunIcon } from '@chakra-ui/icons'
 import { useEffect } from 'react'
+import WalletConnectButton from './components/WalletConnectButton';
 
 const Home = (props) => {
 
-  const { setWalletTheme } = props
+  // const { setWalletTheme } = props
   const { colorMode, toggleColorMode } = useColorMode()
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => { setWalletTheme(colorMode) }, [colorMode])
+  // useEffect(() => { setWalletTheme(colorMode) }, [colorMode])
 
   return (
     <div>
@@ -28,11 +29,7 @@ const Home = (props) => {
       <main>
         <Flex h={14} alignItems='center'>
           <Spacer />
-          <ConnectButton
-          // accountStatus={{ smallScreen: 'avatar', largeScreen: 'address', }}
-          // chainStatus={{ smallScreen: 'icon', largeScreen: 'name', }}
-          // showBalance={{ smallScreen: false, largeScreen: true, }}
-          />
+          <WalletConnectButton />
           <IconButton
             mx='.5em'
             rounded='full'
