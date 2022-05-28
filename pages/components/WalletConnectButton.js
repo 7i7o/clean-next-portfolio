@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, Center, HStack, Image, Tag } from '@chakra-ui/react'
+import { Button, ButtonGroup, Center, HStack, Image, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverHeader, PopoverTrigger, Portal, Tag, VStack } from '@chakra-ui/react'
 import { useAccount, useConnect, useDisconnect, useEnsAvatar, useEnsName, } from 'wagmi'
 // import { Center } from "@chakra-ui/react"
 // import { ConnectButton } from "@rainbow-me/rainbowkit"
@@ -27,27 +27,44 @@ const WalletConnectButton = () => {
                 </>
                 :
 
-                error ?
-                    <Center>{error.message}</Center>
-                    :
-                    <ButtonGroup>
-                        {connectors.map((connector) => (
-                            <Button
-                                disabled={!connector.ready}
-                                key={connector.id}
-                                onClick={() => connect(connector)}
-                            >
-                                {connector.name}
-                                {!connector.ready && ' (unsupported)'}
-                                {isConnecting &&
-                                    connector.id === pendingConnector?.id &&
-                                    ' (connecting)'}
-                            </Button>
-                        ))}
-                    </ButtonGroup>
+                <HStack> {error ? <Center>{error.message}</Center> : <></>}
+                    {
+                        < Popover placement='bottom-end'>
+                            <PopoverTrigger>
+                                <Button colorScheme='blue' >Connect Wallet</Button>
+                            </PopoverTrigger>
+                            <Portal>
+                                <PopoverContent>
+                                    <PopoverArrow />
+                                    <PopoverHeader>Select your Wallet</PopoverHeader>
+                                    <PopoverCloseButton br='full' />
+                                    <PopoverBody>
+                                        <VStack>
+                                            {connectors.map((connector) => (
+                                                <Button
+                                                    w='100%'
+                                                    disabled={!connector.ready}
+                                                    key={connector.id}
+                                                    onClick={() => connect(connector)}
+                                                >
+                                                    {connector.name}
+                                                    {!connector.ready && ' (unsupported)'}
+                                                    {isConnecting &&
+                                                        connector.id === pendingConnector?.id &&
+                                                        ' (connecting)'}
+                                                </Button>
+                                            ))}
+                                        </VStack>
+                                        {/* <Button colorScheme='blue'>Button</Button> */}
+                                    </PopoverBody>
+                                    {/* <PopoverFooter>This is the footer</PopoverFooter> */}
+                                </PopoverContent>
+                            </Portal>
+                        </Popover>
+                    } </HStack>
             }
 
-        </HStack>
+        </HStack >
     )
     // <Center w='100%' h='6em' pb='2em'>
     // <ConnectButton
