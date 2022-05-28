@@ -24,6 +24,7 @@ const MyApp = ({ Component, pageProps }) => {
     // [chain.mainnet, chain.polygon, chain.optimism, chain.arbitrum],
     // [chain.polygon],
     [chain.polygonMumbai],
+    // [chain.polygonMumbai, chain.mainnet, chain.polygon, chain.optimism, chain.arbitrum],
     [alchemyProvider({ alchemyId }), publicProvider()]
   );
 
