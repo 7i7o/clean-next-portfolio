@@ -16,7 +16,7 @@ import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 
 import { useState } from 'react';
 
-const alchemyId = process.env.ALCHEMY_ID
+const alchemyId = process.env.ALCHEMY_ID_MUMBAI
 
 const MyApp = ({ Component, pageProps }) => {
 
@@ -24,6 +24,7 @@ const MyApp = ({ Component, pageProps }) => {
     // [chain.mainnet, chain.polygon, chain.optimism, chain.arbitrum],
     // [chain.polygon],
     [chain.polygonMumbai],
+    // [chain.polygonMumbai, chain.polygon],
     // [chain.polygonMumbai, chain.mainnet, chain.polygon, chain.optimism, chain.arbitrum],
     [alchemyProvider({ alchemyId }), publicProvider()]
   );

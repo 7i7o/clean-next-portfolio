@@ -1,4 +1,4 @@
-import { Divider, Flex, IconButton, Spacer, useColorMode } from '@chakra-ui/react'
+import { Center, Divider, Flex, IconButton, Spacer, useColorMode } from '@chakra-ui/react'
 import Head from 'next/head'
 
 import PageHeader from './components/PageHeader'
@@ -7,16 +7,19 @@ import Examples from './components/Examples'
 import Footer from './components/Footer'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { MoonIcon, SunIcon } from '@chakra-ui/icons'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import WalletConnectButton from './components/WalletConnectButton';
 
 const Home = (props) => {
 
   // const { setWalletTheme } = props
+
   const { colorMode, toggleColorMode } = useColorMode()
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   // useEffect(() => { setWalletTheme(colorMode) }, [colorMode])
+
+  const [wrongNetwork, setWrongNetwork] = useState(true)
 
   return (
     <div>
@@ -29,7 +32,7 @@ const Home = (props) => {
       <main>
         <Flex h={14} alignItems='center'>
           <Spacer />
-          <WalletConnectButton />
+          <WalletConnectButton wrongNetwork={wrongNetwork} setWrongNetwork={setWrongNetwork} />
           <IconButton
             mx='.5em'
             rounded='full'
@@ -43,7 +46,11 @@ const Home = (props) => {
           />
         </Flex>
         <PageHeader />
-        <NFTManager />
+        {wrongNetwork ?
+          <Center w='100%' h='32rem' ></Center>
+          :
+          <NFTManager wrongNetwork={wrongNetwork} />
+        }
         <Divider />
         <Examples />
         <Divider />

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { Button, Center, HStack, Skeleton, Tag, useColorModeValue, useToast, VStack } from "@chakra-ui/react"
-import { useAccount, useContractRead, useContractWrite, useWaitForTransaction } from "wagmi"
+import { useAccount, useContractRead, useContractWrite, useNetwork, useWaitForTransaction } from "wagmi"
 import { BigNumber, ethers } from 'ethers';
 
 import Card from "./Card"
@@ -8,9 +8,12 @@ import SVGie from "./SVGie"
 import contractABI from "../../constants/contractABI.json"
 import { contractNameOrAddress } from "../../constants/contract"
 
-const NFTManager = () => {
+const NFTManager = (props) => {
 
-    const { data, isError, isLoading } = useAccount()
+    const { wrongNetwork } = props
+
+    const { data: account, isError, isLoading } = useAccount()
+    // const { activeChain, chains, error: errorNetwork, isLoading: isLoadingNetwork, pendingChainId, switchNetwork } = useNetwork()
 
     const cardVariant = useColorModeValue('shadowLight', 'shadowDark')
 
@@ -21,6 +24,7 @@ const NFTManager = () => {
     const [totalSupply, setTotalSupply] = useState()
     const [mintPrice, setMintPrice] = useState()
     const [mintActive, setMintActive] = useState()
+    // const [wrongNetwork, setWrongNetwork] = useState(false)
 
     const contractInfo = { addressOrName: contractNameOrAddress, contractInterface: contractABI.abi, }
 
@@ -31,10 +35,16 @@ const NFTManager = () => {
     const { data: mintActiveResult } = useContractRead(contractInfo, 'isMintActive', {})
     // const contractWrite =
     const { data: mintTxReceipt, error: mintError, isError: mintIsError, isLoading: mintIsLoading, write } =
-        useContractWrite(contractInfo, 'safeMint', { args: [data?.address] })
+        useContractWrite(contractInfo, 'safeMint', { args: [account?.address] })
     // useContractWrite(contractInfo, 'safeMint', { args: [data?.address], value: BigNumber.from(mintPriceBN?mintPriceBN:0) })
     // const { data: mintTxReceipt, error: mintError, isError: mintIsError, isLoading: mintIsLoading } =
     //     useWaitForTransaction({ wait: contractWrite.data?.wait })
+
+    // useEffect(
+    //     () => {
+    //         if (-1 != chains.findIndex(x => { x.id === activeChain?.id })) setWrongNetwork(true)
+    //         else setWrongNetwork(false)
+    //     }, [data, activeChain])
 
     useEffect(() => {
         // console.log('price is: ', ethers.utils.formatEther(mintPriceBN))
@@ -111,7 +121,7 @@ const NFTManager = () => {
                                 Error Loading Account
                             </Center>
                         </Card>
-                        : !data ?
+                        : !account ?
                             <Card
                                 size='xl'
                                 // variant={colorMode === 'light' ? 'shadowLight' : 'shadowDark'}
@@ -124,15 +134,15 @@ const NFTManager = () => {
                             : <VStack >
                                 {/* <>Account: {data?.address}</> */}
                                 <SVGie
-                                    address={data?.address}
-                                    tokenId={ethers.BigNumber.from(data?.address)}
+                                    address={account?.address}
+                                    tokenId={ethers.BigNumber.from(account?.address)}
                                     size='xl'
                                     // variant={colorMode === 'light' ? 'shadowLight' : 'shadowDark'}
                                     variant={cardVariant}
                                 />
                                 <Center >
                                     <Button
-                                        disabled={!mintActive || mintIsLoading}
+                                        disabled={!mintActive || mintIsLoading || wrongNetwork}
                                         onClick={() => {
                                             console.log(mintPriceBN)
                                             console.log(ethers.utils.formatEther(mintPriceBN))
@@ -158,7 +168,7 @@ const NFTManager = () => {
                                     <Tag>Delay ratio: {slowFactor}</Tag>
                                 </HStack>
                                 <Center pl='3em' pr='3em' align={'center'} pb={0}>
-                                    ( Price follows a flattened Fibonacci curve, related to amount of NFTs minted)
+                                    The Price follows a flattened Fibonacci curve, related to the amount of NFTs minted
                                 </Center>
 
                             </VStack>
