@@ -30,26 +30,6 @@ const NFTManager = (props) => {
     const [mintPrice, setMintPrice] = useState()
     const [balance, setBalance] = useState()
 
-    // useEffect(() => {
-    //     if (mintIsLoading) return;
-    //     if (mintIsError) {
-    //         console.log('Minting Error: ', mintError)
-    //         toast({
-    //             title: `Error minting your SVGie`,
-    //             status: 'error',
-    //             isClosable: true,
-    //         })
-    //     }
-    //     if (!mintTxReceipt) return
-    //     console.log(mintTxReceipt)
-    //     // toast({
-    //     //   title: `You minted your SVGie!`,
-    //     //   status: 'success',
-    //     //   isClosable: true,
-    //     // })
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [mintTxReceipt, mintError, mintIsError, mintIsLoading])
-
     return (
         <Center w='100%' h='32rem' >
             {(
@@ -102,6 +82,9 @@ const NFTManager = (props) => {
                                             mintPrice={mintPrice}
                                             wrongNetwork={wrongNetwork}
                                             balance={balance}
+                                            contractInfo={contractInfo}
+                                            address={account?.address}
+                                            tokenId={ethers.BigNumber.from(account?.address)}
                                         />
                                     }
                                 </Center>
@@ -110,11 +93,6 @@ const NFTManager = (props) => {
                                     setMintPrice={setMintPrice}
                                     contractInfo={contractInfo}
                                 />
-                                {/* <HStack >
-                                    <Tag>Next Price in {!nextPrice || !slowFactor ? 0 : nextPrice * slowFactor - totalSupply} mints</Tag>
-                                    <Tag>Next Price: {nextPrice} MATIC</Tag>
-                                    <Tag>Delay ratio: {slowFactor}</Tag>
-                                </HStack> */}
                                 <Center pl='3em' pr='3em' align={'center'} pb={0}>
                                     The Price follows a flattened Fibonacci curve, related to the amount of NFTs minted
                                 </Center>

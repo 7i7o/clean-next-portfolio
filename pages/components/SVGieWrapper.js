@@ -26,7 +26,7 @@ const SVGieWrapper = (props) => {
 
         if (!userBalance.toNumber()) {
             // showToast('You have not minted yours!', 'error')
-            console.log(`balanceOf ${address} is 0`)
+            // console.log(`balanceOf ${address} is 0`)
             return;
         }
 

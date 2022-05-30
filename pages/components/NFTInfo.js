@@ -6,10 +6,6 @@ const NFTInfo = (props) => {
 
     const { setMintActive, setMintPrice, contractInfo } = props
 
-    const [totalSupply, setTotalSupply] = useState()
-    const [nextPrice, setNextPrice] = useState()
-    const [slowFactor, setSlowFactor] = useState()
-
     const { data: mintPriceBN } = useContractRead(contractInfo, 'getPrice', {})
     const { data: nextPriceBN } = useContractRead(contractInfo, 'getNextPrice', {})
     const { data: slowFactorBN } = useContractRead(contractInfo, 'getSlowFactor', {})
