@@ -1,15 +1,19 @@
 import { Button, Center, HStack, Image, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverHeader, PopoverTrigger, Portal, Tag, VStack } from '@chakra-ui/react'
-import { useAccount, useConnect, useDisconnect, useEnsAvatar, useEnsName, useNetwork } from 'wagmi'
+import { useAccount, useConnect, useDisconnect, useNetwork } from 'wagmi'
 import { ethers } from 'ethers';
-import { useEffect, useState } from 'react';
-// import { Center } from "@chakra-ui/react"
-// import { ConnectButton } from "@rainbow-me/rainbowkit"
+import { useContext, useEffect, useState } from 'react';
+import { Context } from '../Context';
 
 const alchemyId = process.env.ALCHEMY_ID_MAINNET
 
-const WalletConnectButton = (props) => {
+const WalletConnectButton = () => {
 
-    const { wrongNetwork, setWrongNetwork } = props
+    const {
+        wrongNetwork, setWrongNetwork,
+        mainnetProvider, setMainnetProvider,
+        ensName, setEnsName,
+        ensAvatar, setEnsAvatar,
+    } = useContext(Context);
 
     const { data: account } = useAccount()
     // const { data: ensAvatar } = useEnsAvatar({ addressOrName: account?.address })
@@ -19,10 +23,11 @@ const WalletConnectButton = (props) => {
     const { activeChain, chains, error: errorNetwork, isLoading, pendingChainId, switchNetwork } = useNetwork()
     const [otherNetworks, setOtherNetworks] = useState()
 
-    const [ensName, setEnsName] = useState()
-    const [ensAvatar, setEnsAvatar] = useState()
-
-    const mainnetProvider = new ethers.providers.AlchemyProvider(1, alchemyId);
+    useEffect(() => {
+        if (mainnetProvider) return
+        setMainnetProvider(new ethers.providers.AlchemyProvider(1, alchemyId))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     useEffect(() => {
         if (!mainnetProvider || !account?.address) return;

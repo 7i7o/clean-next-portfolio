@@ -10,26 +10,18 @@ import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
-
-// import { getDefaultWallets, RainbowKitProvider, lightTheme, darkTheme } from '@rainbow-me/rainbowkit';
-// import '@rainbow-me/rainbowkit/styles.css';
-
-import { useState } from 'react';
+import { ContextProvider } from './Context';
 
 const alchemyId = process.env.ALCHEMY_ID_MUMBAI
 
 const MyApp = ({ Component, pageProps }) => {
 
   const { chains, provider, webSocketProvider } = configureChains(
-    // [chain.mainnet, chain.polygon, chain.optimism, chain.arbitrum],
-    // [chain.polygon],
     [chain.polygonMumbai],
-    // [chain.polygonMumbai, chain.polygon],
-    // [chain.polygonMumbai, chain.mainnet, chain.polygon, chain.optimism, chain.arbitrum],
+    // [chain.polygon],
     [alchemyProvider({ alchemyId }), publicProvider()]
   );
 
-  // const { connectors } = getDefaultWallets({ appName: 'SVGies', chains });
   const connectors = [
     new MetaMaskConnector({ chains }),
     new CoinbaseWalletConnector({ chains, options: { appName: 'wagmi', }, }),
@@ -38,16 +30,12 @@ const MyApp = ({ Component, pageProps }) => {
   ]
   const wagmiClient = createClient({ autoConnect: true, connectors, provider, webSocketProvider })
 
-  // const [walletTheme, setWalletTheme] = useState()
-  // const rainbowTheme = (walletTheme === 'light') ? lightTheme() : darkTheme()
-
   return (
     <ChakraProvider theme={theme}>
       <WagmiConfig client={wagmiClient}>
-        {/* <RainbowKitProvider chains={chains} theme={rainbowTheme} > */}
-        {/* <Component {...pageProps} setWalletTheme={setWalletTheme} /> */}
-        <Component {...pageProps} />
-        {/* </RainbowKitProvider> */}
+        <ContextProvider>
+          <Component {...pageProps} />
+        </ContextProvider>
       </WagmiConfig>
     </ChakraProvider>
   )

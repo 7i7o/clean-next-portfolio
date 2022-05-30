@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { Center, Divider, Heading, Input, Skeleton, useColorModeValue, VStack } from "@chakra-ui/react"
 import { useAccount } from "wagmi"
 import { ethers } from 'ethers';
@@ -6,16 +6,17 @@ import { ethers } from 'ethers';
 import Card from "./Card"
 import NFTInfo from "./NFTInfo";
 import MintButton from "./MintButton";
-import SVGie from "./SVGie"
 
 import contractABI from "../../constants/contractABI.json"
 import { contractNameOrAddress } from "../../constants/contract"
 import NFTLinks from "./NFTLinks";
 import SVGieWrapper from "./SVGieWrapper";
+import { Context } from "../Context";
 
-const NFTManager = (props) => {
+const NFTMinter = () => {
 
-    const { wrongNetwork } = props
+    // const { wrongNetwork } = props
+    const { wrongNetwork } = useContext(Context);
 
     const contractInfo = {
         addressOrName: contractNameOrAddress,
@@ -107,7 +108,7 @@ const NFTManager = (props) => {
                                 </VStack>
                 )}
             </Center>
-            {owner === account?.address &&
+            {owner === account?.address && // Owner Buttons Section
                 <VStack
                     pb='1em'
                 >
@@ -144,4 +145,4 @@ const NFTManager = (props) => {
 
 }
 
-export default NFTManager
+export default NFTMinter

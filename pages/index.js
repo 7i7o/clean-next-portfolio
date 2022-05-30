@@ -1,22 +1,22 @@
-import { Center, Divider, Flex, IconButton, Spacer, useColorMode } from '@chakra-ui/react'
 import Head from 'next/head'
+import { useContext } from 'react'
+import { Center, Divider, Flex, Spacer } from '@chakra-ui/react'
 
-import PageHeader from './components/PageHeader'
-import NFTManager from './components/NFTMinter';
-import Examples from './components/Examples'
-import Footer from './components/Footer'
-import { useState } from 'react'
+import { Context } from './Context';
 import WalletConnectButton from './components/WalletConnectButton';
 import ThemeSwitcher from './components/ThemeSwitcher';
+import PageHeader from './components/PageHeader'
+import NFTMinter from './components/NFTMinter';
+import Examples from './components/Examples'
+import Footer from './components/Footer'
 
-const Home = (props) => {
+const Home = () => {
 
-  // const { colorMode, toggleColorMode } = useColorMode()
-
-  const [wrongNetwork, setWrongNetwork] = useState(true)
+  const { wrongNetwork } = useContext(Context);
 
   return (
     <div>
+
       <Head>
         <title>SVGies</title>
         <meta name="description" content="Unique Visual Wallet Identifier" />
@@ -26,21 +26,21 @@ const Home = (props) => {
       <main>
         <Flex h={14} alignItems='center'>
           <Spacer />
-          <WalletConnectButton wrongNetwork={wrongNetwork} setWrongNetwork={setWrongNetwork} />
+          <WalletConnectButton />
           <ThemeSwitcher />
         </Flex>
         <PageHeader />
         {wrongNetwork ?
           <Center w='100%' h='32rem' ></Center>
           :
-          <NFTManager wrongNetwork={wrongNetwork} />
+          <NFTMinter />
         }
         <Divider />
         <Examples />
         <Divider />
         <Footer />
-
       </main>
+
     </div >
   )
 }
