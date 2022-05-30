@@ -15,18 +15,18 @@ const MintButton = (props) => {
         useContractWrite(contractInfo, mintCallback, { args: [address], overrides: { value: mintPrice } },)
     // useContractWrite(contractInfo, 'safeMint', { args: [address], overrides: { value: mintPrice } },)
 
-    const a = useContractEvent(contractInfo, 'Transfer', e => reloadOnMint(e), { once: true, },)
-
     const reloadOnMint = e => {
-        // console.log(e)
-        // console.log(address)
-        if (e[1] === address) {
-            router.reload(window.location.pathname)
-        } else {
+        if (!e || e.length < 2) return
+
+        if (e[1] !== address) {
             console.log("Not reloading because event topic doesn't match address")
+            return
         }
 
+        router.reload(window.location.pathname)
     }
+
+    const a = useContractEvent(contractInfo, 'Transfer', e => reloadOnMint(e), { once: true, },)
 
     useEffect(() => {
 

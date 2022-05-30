@@ -16,7 +16,7 @@ const NFTLinks = (props) => {
                 rounded='full'
                 aria-label='OpenSea Link'
                 alt='OpenSea Link'
-                href={openseaBaseUri + tokenId.toString()}
+                href={openseaBaseUri + tokenId?.toString()}
                 isExternal>
                 <OpenSeaIcon width={iconSize} height={iconSize} />
             </Link>
@@ -25,7 +25,7 @@ const NFTLinks = (props) => {
                 rounded='full'
                 aria-label='Etherscan Link'
                 alt='Etherscan Link'
-                href={etherscanBaseUri + tokenId.toString()}
+                href={etherscanBaseUri + tokenId?.toString()}
                 isExternal>
                 <EtherscanIcon width={iconSize} height={iconSize} />
             </Link>
