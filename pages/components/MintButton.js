@@ -15,7 +15,7 @@ const MintButton = (props) => {
         useContractWrite(contractInfo, mintCallback, { args: [address], overrides: { value: mintPrice } },)
     // useContractWrite(contractInfo, 'safeMint', { args: [address], overrides: { value: mintPrice } },)
 
-    const { } = useContractEvent(contractInfo, 'Transfer', e => reloadOnMint(e), { once: true, },)
+    const a = useContractEvent(contractInfo, 'Transfer', e => reloadOnMint(e), { once: true, },)
 
     const reloadOnMint = e => {
         // console.log(e)
