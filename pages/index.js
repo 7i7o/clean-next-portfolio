@@ -2,22 +2,16 @@ import { Center, Divider, Flex, IconButton, Spacer, useColorMode } from '@chakra
 import Head from 'next/head'
 
 import PageHeader from './components/PageHeader'
-import NFTManager from './components/NFTManager';
+import NFTManager from './components/NFTMinter';
 import Examples from './components/Examples'
 import Footer from './components/Footer'
-import { ConnectButton } from '@rainbow-me/rainbowkit'
-import { MoonIcon, SunIcon } from '@chakra-ui/icons'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import WalletConnectButton from './components/WalletConnectButton';
+import ThemeSwitcher from './components/ThemeSwitcher';
 
 const Home = (props) => {
 
-  // const { setWalletTheme } = props
-
-  const { colorMode, toggleColorMode } = useColorMode()
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  // useEffect(() => { setWalletTheme(colorMode) }, [colorMode])
+  // const { colorMode, toggleColorMode } = useColorMode()
 
   const [wrongNetwork, setWrongNetwork] = useState(true)
 
@@ -33,17 +27,7 @@ const Home = (props) => {
         <Flex h={14} alignItems='center'>
           <Spacer />
           <WalletConnectButton wrongNetwork={wrongNetwork} setWrongNetwork={setWrongNetwork} />
-          <IconButton
-            mx='.5em'
-            rounded='full'
-            aria-label='Toggle dark mode'
-            bgColor='transparent'
-            icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
-            onClick={toggleColorMode}
-            _hover={{
-              bgColor: 'transparent',
-            }}
-          />
+          <ThemeSwitcher />
         </Flex>
         <PageHeader />
         {wrongNetwork ?

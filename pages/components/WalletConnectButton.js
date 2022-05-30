@@ -75,7 +75,7 @@ const WalletConnectButton = (props) => {
                         <PopoverCloseButton br='full' />
                         <PopoverBody>
                             <VStack>
-                                {otherNetworks.map((x) => (
+                                {otherNetworks?.map((x) => (
                                     <Button
                                         w='100%'
                                         colorScheme='blue'
