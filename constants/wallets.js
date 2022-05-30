@@ -8,6 +8,7 @@ const addr7 = '0xB563C841C6FdE27A8e533E67fb15f4C270860BED'; // Pixel Avatars
 const addr8 = '0x0b29CF9b4D48BF75Bd1c2681cA07aB102F85c98C'; // 7i7o-domains
 const addr9 = '0xBE127507dA672f51492C416274470702F89c4918'; // Cobie
 const addr0 = '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266'; // HH #0
+// const addr0 = '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'; // Vitalik
 // const addr10 = '0x3352655300000000000000000000000000000000'; // 
 // const addr11 = '0x123456789abcdef123456789abcdef123456789a'; // 
 // const addr12 = '0xf60281bf4701989428fe7516d834342623199e2b'; // 

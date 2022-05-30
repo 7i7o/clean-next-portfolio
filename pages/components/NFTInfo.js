@@ -4,13 +4,14 @@ import { useContractRead } from "wagmi"
 
 const NFTInfo = (props) => {
 
-    const { setMintActive, setMintPrice, contractInfo } = props
+    const { setMintActive, setMintPrice, setOwner, contractInfo } = props
 
     const { data: mintPriceBN } = useContractRead(contractInfo, 'getPrice', {})
     const { data: nextPriceBN } = useContractRead(contractInfo, 'getNextPrice', {})
     const { data: slowFactorBN } = useContractRead(contractInfo, 'getSlowFactor', {})
     const { data: totalSupplyBN } = useContractRead(contractInfo, 'getTotalSupply', {})
     const { data: mintActive } = useContractRead(contractInfo, 'isMintActive', {})
+    const { data: owner } = useContractRead(contractInfo, 'getOwner', {})
 
     useEffect(() => {
         setMintActive(mintActive)
@@ -22,6 +23,12 @@ const NFTInfo = (props) => {
         setMintPrice(mintPriceBN)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [mintPriceBN])
+
+    useEffect(() => {
+        if (!owner) return;
+        setOwner(owner)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [owner])
 
     const priceMintsLeft = nextPriceBN * slowFactorBN - totalSupplyBN * 10 ** 18
     return (
