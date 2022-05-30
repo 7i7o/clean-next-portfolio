@@ -31,7 +31,7 @@ const NFTManager = (props) => {
     const [mintPrice, setMintPrice] = useState()
     const [balance, setBalance] = useState()
     const [owner, setOwner] = useState()
-    const [teamAddress, setTeamAddress] = useState()
+    const [teamAddress, setTeamAddress] = useState('')
 
     return (
         <>

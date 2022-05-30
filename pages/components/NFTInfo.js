@@ -36,7 +36,7 @@ const NFTInfo = (props) => {
             {/* <Tag>Next Price in {!nextPrice || !slowFactor ? 0 : (nextPrice / 10 ** 18 * slowFactor) - totalSupply} mints</Tag> */}
             <Tag>{priceMintsLeft > 0 ? `${priceMintsLeft + 1} mints ` : 'Last mint '}left for current price</Tag>
             <Tag>Next Price: {nextPriceBN / 10 ** 18} MATIC</Tag>
-            <Tag>Flattener factor: {slowFactorBN.toNumber()}</Tag>
+            <Tag>Flattener factor: {slowFactorBN?.toNumber()}</Tag>
         </HStack>
     )
 }
