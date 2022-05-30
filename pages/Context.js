@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 export const Context = React.createContext();
 
-export const ContextProvider = ({ children }) => {
+const ContextProvider = ({ children }) => {
 
     const [wrongNetwork, setWrongNetwork] = useState(true)
     const [mainnetProvider, setMainnetProvider] = useState()
@@ -22,3 +22,5 @@ export const ContextProvider = ({ children }) => {
         </Context.Provider>
     )
 }
+
+export default ContextProvider
