@@ -18,8 +18,8 @@ const MintButton = (props) => {
     const { } = useContractEvent(contractInfo, 'Transfer', e => reloadOnMint(e), { once: true, },)
 
     const reloadOnMint = e => {
-        console.log(e)
-        console.log(address)
+        // console.log(e)
+        // console.log(address)
         if (e[1] === address) {
             router.reload(window.location.pathname)
         } else {
