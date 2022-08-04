@@ -1,14 +1,17 @@
 import { Center } from '@chakra-ui/react'
 
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useContractRead } from 'wagmi'
-import Card from './Card'
-import { ethers } from 'ethers';
 import SVGie from './SVGie';
+import { Context } from '../Context';
 
 const SVGieWrapper = (props) => {
 
-    const { address, tokenId, width, height, variant, size, contractInfo, balance, setBalance } = props
+    const { address, tokenId } = props
+    const { contractInfo, balance, setBalance } = useContext(Context);
+
+    const [waitForBalance, setWaitForBalance] = useState(true)
+    const [tokenIdBuffer, setTokenIdBuffer] = useState()
 
     const { data: userBalance, error: errorBalance, isError: isErrorBalance, isLoading: isLoadingBalance, isFetched: isFetchedBalance } =
         useContractRead(contractInfo, 'balanceOf', { args: address, enabled: true })
@@ -17,45 +20,46 @@ const SVGieWrapper = (props) => {
         if (isLoadingBalance || !isFetchedBalance) return;
 
         if (isErrorBalance) {
-            // showToast(`Couldn't load balancce`, 'error')
             console.log(errorBalance)
             return;
         }
 
+        console.log(`balanceOf ${address} is ${userBalance.toNumber()}`)
         setBalance(userBalance.toNumber())
-
-        if (!userBalance.toNumber()) {
-            // showToast('You have not minted yours!', 'error')
-            // console.log(`balanceOf ${address} is 0`)
-            return;
-        }
+        setWaitForBalance(false)
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userBalance, isErrorBalance, isLoadingBalance, isFetchedBalance]);
 
+    useEffect(() => {
+        setWaitForBalance(true)
+    }, [tokenId])
 
-    return (
-        <Card
-            size={size}
-            variant={variant}
-        >
-            {!balance ?
-                <Center align='center' color='#303030' textShadow='0 0 3px #cccccc' >
-                    No SVGie found! 😢 <br />
-                    Did you mint yours?
-                </Center>
-                :
-                <SVGie
-                    address={address}
-                    tokenId={tokenId}
-                    contractInfo={contractInfo}
-                    balance={balance}
-                    width={width}
-                    height={height}
-                />
-            }
-        </Card>
-    )
+    useEffect(() => {
+        if (waitForBalance) return
+        if (tokenId !== tokenIdBuffer)
+            setTokenIdBuffer(tokenId)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [waitForBalance])
+
+    return !balance ?
+        <Center align='center' color='#303030' textShadow='0 0 3px #cccccc' >
+            No SVGie found! 😢 <br />
+            Did you mint yours?
+        </Center>
+        :
+        waitForBalance || tokenId !== tokenIdBuffer ?
+            <Center align='center' color='#303030' textShadow='0 0 3px #cccccc'>
+                Loading...
+            </Center >
+            :
+            <SVGie
+                address={address}
+                tokenId={tokenIdBuffer}
+                fetchOnLoad={!waitForBalance}
+                contractInfo={contractInfo}
+                balance={balance}
+            />
 
 }
 

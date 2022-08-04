@@ -7,7 +7,7 @@ import OpenSeaIcon from "./OpenSeaIcon"
 
 const NFTLinks = (props) => {
 
-    const { address, tokenId, balance, iconSize } = props
+    const { tokenId, iconSize } = props
 
     return (
         <Center>

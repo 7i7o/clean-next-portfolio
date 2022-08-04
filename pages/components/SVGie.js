@@ -1,17 +1,20 @@
 import { Center, Skeleton, useToast } from '@chakra-ui/react'
 
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useContractRead } from 'wagmi'
 import InlineSVG from 'svg-inline-react';
+import { Context } from '../Context';
 
 const SVGie = (props) => {
 
-    const { address, tokenId, contractInfo, balance, width, height } = props
+    const { fetchOnLoad, tokenId } = props
+
+    const { contractInfo, balance } = useContext(Context)
 
     const [decodedURIImage, setDecodedURIImage] = useState('')
 
     const toast = useToast()
-    const showToast = (title, status = 'info') => toast({ title, status, isClosable: true })
+    const showToast = (title, status = 'info') => toast({ title, status, isClosable: fetchOnLoad ? true : false })
 
     const { data, error, isError, isLoading, isFetched } =
         useContractRead(contractInfo, 'tokenURI', { args: tokenId, enabled: true })
@@ -56,7 +59,10 @@ const SVGie = (props) => {
                         Loading...
                     </Skeleton>
                     :
-                    <InlineSVG src={decodedURIImage} element='span' width={width} height={height} />}
+                    <InlineSVG
+                        src={decodedURIImage}
+                        element='span'
+                    />}
         </>
     )
 

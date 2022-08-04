@@ -123,6 +123,12 @@ const styles = {
   },
 }
 
+const breakpoints = {
+  sm: '30em',
+  md: '48em',
+  lg: '62em',
+}
+
 export const theme = extendTheme({
   config,
   colors,
@@ -131,5 +137,6 @@ export const theme = extendTheme({
     Link,
     Card,
   },
+  breakpoints,
   styles,
 })

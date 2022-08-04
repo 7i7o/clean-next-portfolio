@@ -1,5 +1,5 @@
 import { Button, Center, HStack, Image, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverHeader, PopoverTrigger, Portal, Tag, VStack } from '@chakra-ui/react'
-import { useAccount, useConnect, useDisconnect, useNetwork } from 'wagmi'
+import { useAccount, useConnect, useDisconnect, useEnsAvatar, useEnsName, useNetwork } from 'wagmi'
 import { ethers } from 'ethers';
 import { useContext, useEffect, useState } from 'react';
 import { Context } from '../Context';
@@ -10,14 +10,14 @@ const WalletConnectButton = () => {
 
     const {
         wrongNetwork, setWrongNetwork,
-        mainnetProvider, setMainnetProvider,
         ensName, setEnsName,
         ensAvatar, setEnsAvatar,
+        mainnetProvider, setMainnetProvider,
     } = useContext(Context);
 
     const { data: account } = useAccount()
-    // const { data: ensAvatar } = useEnsAvatar({ addressOrName: account?.address })
     // const { data: ensName } = useEnsName({ address: account?.address })
+    // const { data: ensAvatar } = useEnsAvatar({ addressOrName: account?.address })
     const { connect, connectors, error, isConnecting, pendingConnector } = useConnect()
     const { disconnect } = useDisconnect()
     const { activeChain, chains, error: errorNetwork, isLoading, pendingChainId, switchNetwork } = useNetwork()
@@ -48,6 +48,17 @@ const WalletConnectButton = () => {
         )
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ensName])
+
+    // useEffect(() => {
+    //     if (!ensName) return;
+    //     setEnsName(ensName);
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [ensName])
+    // useEffect(() => {
+    //     if (!ensAvatar) return;
+    //     setEnsAvatar(ensAvatar);
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [ensName])
 
     useEffect(() => {
         if (!activeChain) return;

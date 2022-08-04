@@ -30,11 +30,12 @@ const Home = () => {
           <ThemeSwitcher />
         </Flex>
         <PageHeader />
-        {wrongNetwork ?
+        {/* {wrongNetwork ?
           <Center w='100%' h='32rem' ></Center>
           :
           <NFTMinter />
-        }
+        } */}
+        <NFTMinter />
         <Divider />
         <Examples />
         <Divider />

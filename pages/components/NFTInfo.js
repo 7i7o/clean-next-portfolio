@@ -1,10 +1,11 @@
 import { HStack, Tag } from "@chakra-ui/react"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useContractRead } from "wagmi"
+import { Context } from "../Context"
 
-const NFTInfo = (props) => {
+const NFTInfo = () => {
 
-    const { setMintActive, setMintPrice, setOwner, contractInfo } = props
+    const { setMintActive, setMintPrice, setOwner, contractInfo } = useContext(Context)
 
     const { data: mintPriceBN } = useContractRead(contractInfo, 'getPrice', {})
     const { data: nextPriceBN } = useContractRead(contractInfo, 'getNextPrice', {})

@@ -10,7 +10,8 @@ import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
-import { ContextProvider } from './Context';
+import ContextProvider from './Context';
+// import { ContextProvider } from './Context';
 
 const alchemyId = process.env.ALCHEMY_ID_MUMBAI
 

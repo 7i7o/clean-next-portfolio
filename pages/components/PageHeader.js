@@ -9,7 +9,7 @@ const PageHeader = (props) => {
         <>
             <Center w='100%' h={20} >
                 <Heading
-                    size='lg'
+                    fontSize={['3xl','5xl','7xl']}
                     variant={variant}
                 >
                     SVGies
