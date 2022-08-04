@@ -43,7 +43,8 @@ const MintButton = (props) => {
         <>
             <ContractWrite
                 buttonDisabled={!mintActive || balance || buttonPressCount}
-                buttonText={`Mint (${mintActive ? (mintPrice ? `${ethers.utils.formatEther(mintPrice)} MATIC` : 'Free') : 'SOON'})`}
+                // buttonText={`Mint (${mintActive ? (mintPrice ? `${ethers.utils.formatEther(mintPrice)} MATIC` : 'Free') : 'SOON'})`}
+                buttonText={`${mintActive ? (mintPrice ? `Mint (${ethers.utils.formatEther(mintPrice)} ETH)` : 'Free Mint') : 'Mint (SOON)'}`}
                 buttonLoadingText={`Minting...`}
                 txCallback={txCallback}
                 argsArray={argsArray}

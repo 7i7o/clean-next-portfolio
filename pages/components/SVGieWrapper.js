@@ -37,6 +37,8 @@ const SVGieWrapper = (props) => {
 
     useEffect(() => {
         if (waitForBalance) return
+        console.log(tokenId)
+        console.log(tokenIdBuffer)
         if (tokenId !== tokenIdBuffer)
             setTokenIdBuffer(tokenId)
         // eslint-disable-next-line react-hooks/exhaustive-deps

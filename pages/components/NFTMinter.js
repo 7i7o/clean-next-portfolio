@@ -80,9 +80,9 @@ const NFTMinter = () => {
 
                                     </Center>
                                     <NFTInfo />
-                                    <Center pl='3em' pr='3em' align={'center'} pb={0}>
+                                    {/* <Center pl='3em' pr='3em' align={'center'} pb={0}>
                                         The Price follows a flattened Fibonacci curve, related to the amount of NFTs minted
-                                    </Center>
+                                    </Center> */}
 
                                 </VStack>
                 )}

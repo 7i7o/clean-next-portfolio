@@ -13,12 +13,13 @@ import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import ContextProvider from './Context';
 // import { ContextProvider } from './Context';
 
-const alchemyId = process.env.ALCHEMY_ID_MUMBAI
+const alchemyId = process.env.ALCHEMY_ID_MAINNET
 
 const MyApp = ({ Component, pageProps }) => {
 
   const { chains, provider, webSocketProvider } = configureChains(
-    [chain.polygonMumbai],
+    [chain.mainnet],
+    // [chain.polygonMumbai],
     // [chain.polygon],
     [alchemyProvider({ alchemyId }), publicProvider()]
   );

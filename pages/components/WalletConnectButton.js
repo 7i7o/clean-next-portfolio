@@ -4,7 +4,7 @@ import { ethers } from 'ethers';
 import { useContext, useEffect, useState } from 'react';
 import { Context } from '../Context';
 
-const alchemyId = process.env.ALCHEMY_ID_MAINNET
+// const alchemyId = process.env.ALCHEMY_ID_MAINNET_PUBLIC
 
 const WalletConnectButton = () => {
 
@@ -12,53 +12,51 @@ const WalletConnectButton = () => {
         wrongNetwork, setWrongNetwork,
         ensName, setEnsName,
         ensAvatar, setEnsAvatar,
-        mainnetProvider, setMainnetProvider,
+        // mainnetProvider, setMainnetProvider,
     } = useContext(Context);
 
     const { data: account } = useAccount()
-    // const { data: ensName } = useEnsName({ address: account?.address })
-    // const { data: ensAvatar } = useEnsAvatar({ addressOrName: account?.address })
+    const { data: ensNameBuffer } = useEnsName({ address: account?.address })
+    const { data: ensAvatarBuffer } = useEnsAvatar({ addressOrName: account?.address })
     const { connect, connectors, error, isConnecting, pendingConnector } = useConnect()
     const { disconnect } = useDisconnect()
     const { activeChain, chains, error: errorNetwork, isLoading, pendingChainId, switchNetwork } = useNetwork()
     const [otherNetworks, setOtherNetworks] = useState()
 
-    useEffect(() => {
-        if (mainnetProvider) return
-        setMainnetProvider(new ethers.providers.AlchemyProvider(1, alchemyId))
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-
-    useEffect(() => {
-        if (!mainnetProvider || !account?.address) return;
-        const getEnsName = async () => await mainnetProvider.lookupAddress(account?.address)
-        getEnsName().then(
-            ret => { if (ret) setEnsName(ret) },
-            err => console.log('err ', err)
-        )
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [account])
-
-    useEffect(() => {
-        if (!mainnetProvider || !ensName) return;
-        const getEnsAvatar = async () => await mainnetProvider.getAvatar(ensName)
-        getEnsAvatar().then(
-            ret => { if (ret) setEnsAvatar(ret) },
-            err => console.log('err ', err)
-        )
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ensName])
+    // useEffect(() => {
+    //     if (mainnetProvider) return
+    //     setMainnetProvider(new ethers.providers.AlchemyProvider(1, alchemyId))
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [])
 
     // useEffect(() => {
-    //     if (!ensName) return;
-    //     setEnsName(ensName);
+    //     if (!mainnetProvider || !account?.address) return;
+    //     const getEnsName = async () => await mainnetProvider.lookupAddress(account?.address)
+    //     getEnsName().then(
+    //         ret => { if (ret) setEnsName(ret) },
+    //         err => console.log('err ', err)
+    //     )
     //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [ensName])
+    // }, [account])
+
     // useEffect(() => {
-    //     if (!ensAvatar) return;
-    //     setEnsAvatar(ensAvatar);
+    //     if (!mainnetProvider || !ensName) return;
+    //     const getEnsAvatar = async () => await mainnetProvider.getAvatar(ensName)
+    //     getEnsAvatar().then(
+    //         ret => { if (ret) setEnsAvatar(ret) },
+    //         err => console.log('err ', err)
+    //     )
     //     // eslint-disable-next-line react-hooks/exhaustive-deps
     // }, [ensName])
+
+    useEffect(() => {
+        setEnsName(ensNameBuffer);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ensNameBuffer])
+    useEffect(() => {
+        setEnsAvatar(ensAvatarBuffer);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ensAvatarBuffer])
 
     useEffect(() => {
         if (!activeChain) return;
