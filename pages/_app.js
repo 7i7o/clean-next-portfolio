@@ -1,67 +1,46 @@
-import '../styles/globals.css'
+import { ChakraProvider } from '@chakra-ui/react'
+import { theme } from '../theme'
 
-// import { useState, useEffect } from 'react'
+import { chain, configureChains, createClient, WagmiConfig } from 'wagmi';
 
-import { Provider, chain, createClient, defaultChains } from 'wagmi'
+import { alchemyProvider } from 'wagmi/providers/alchemy';
+import { publicProvider } from 'wagmi/providers/public';
+
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+import ContextProvider from './Context';
+// import { ContextProvider } from './Context';
 
-import { providers } from 'ethers';
-import reactDom from 'react-dom'
+const alchemyId = process.env.ALCHEMY_ID_MAINNET
 
+const MyApp = ({ Component, pageProps }) => {
 
-// API key for Ethereum node
-// Two popular services are Alchemy (alchemy.com) and Infura (infura.io)
-const alchemyId = process.env.NEXT_PUBLIC_ALCHEMY_ID
+  const { chains, provider, webSocketProvider } = configureChains(
+    [chain.mainnet],
+    // [chain.polygonMumbai],
+    // [chain.polygon],
+    [alchemyProvider({ alchemyId }), publicProvider()]
+  );
 
-const chains = defaultChains
-const defaultChain = chain.mainnet
-
-
-const  MyApp = ({ Component, pageProps }) => {
-
-  // const [client, setClient] = useState()
-
-  // Set up connectors on page load
-  const client = createClient({
-    autoConnect: true,
-    connectors({ chainId }) {
-      const chain = chains.find((x) => x.id === chainId) ?? defaultChain
-      const rpcUrl = chain.rpcUrls.alchemy
-        ? `${chain.rpcUrls.alchemy}/${alchemyId}`
-        : chain.rpcUrls.default
-      return [
-        new MetaMaskConnector({ chains }),
-        new CoinbaseWalletConnector({
-          chains,
-          options: {
-            appName: 'wagmi',
-            chainId: chain.id,
-            jsonRpcUrl: rpcUrl,
-          },
-        }),
-        new WalletConnectConnector({
-          chains,
-          options: {
-            qrcode: true,
-            rpc: { [chain.id]: rpcUrl },
-          },
-        }),
-        new InjectedConnector({
-          chains,
-          options: { name: 'Injected' },
-        }),
-      ]
-    },
-  })
+  const connectors = [
+    new MetaMaskConnector({ chains }),
+    new CoinbaseWalletConnector({ chains, options: { appName: 'wagmi', }, }),
+    new WalletConnectConnector({ chains, options: { qrcode: true, }, }),
+    new InjectedConnector({ chains, options: { name: 'Injected', shimDisconnect: true, }, }),
+  ]
+  const wagmiClient = createClient({ autoConnect: true, connectors, provider, webSocketProvider })
 
   return (
-    <Provider client={client}>
-        <Component {...pageProps} />
-    </Provider>
-  );
+    <ChakraProvider theme={theme}>
+      <WagmiConfig client={wagmiClient}>
+        <ContextProvider>
+          <Component {...pageProps} />
+        </ContextProvider>
+      </WagmiConfig>
+    </ChakraProvider>
+  )
 }
 
 export default MyApp
