@@ -5,9 +5,8 @@ import { Context } from "../Context"
 const ContractWriteEvent = (props) => {
 
     const { eventNameFilterOnce = '', eventArgsCallback } = props
-    const { contractInfo } = useContext(Context)
-
-    useContractEvent(contractInfo, eventNameFilterOnce, eventArgsCallback, { once: true, },)
+    const { addressOrName, contractInterface } = useContext(Context)
+    useContractEvent({ addressOrName, contractInterface, eventName: eventNameFilterOnce, listener: eventArgsCallback, once: true })
 
     return <></>
 }

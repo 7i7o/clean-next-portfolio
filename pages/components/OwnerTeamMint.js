@@ -1,13 +1,9 @@
 import { Center, Input } from "@chakra-ui/react"
-import { useContext, useState } from "react"
-import { Context } from "../Context"
+import { useState } from "react"
 import ContractWrite from "./ContractWrite"
 import NFTLinks from "./NFTLinks"
 
 const OwnerTeamMint = () => {
-
-    // const { arg } = props
-    // const { contractInfo } = useContext(Context)
 
     const [teamAddress, setTeamAddress] = useState('')
     const [mintedAddress, setMintedAddress] = useState('')

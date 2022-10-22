@@ -1,13 +1,11 @@
 import { MoonIcon, SunIcon } from "@chakra-ui/icons"
-import { Flex, IconButton, Spacer, useColorMode } from "@chakra-ui/react"
+import { IconButton, useColorMode } from "@chakra-ui/react"
 
 const ThemeSwitcher = () => {
 
     const { colorMode, toggleColorMode } = useColorMode()
 
     return (
-        // <Flex>
-        //     <Spacer />
         <IconButton
             mx='.5em'
             rounded='full'
@@ -19,7 +17,6 @@ const ThemeSwitcher = () => {
                 bgColor: 'transparent',
             }}
         />
-        // </Flex>
     )
 }
 

@@ -9,7 +9,7 @@ const SVGie = (props) => {
 
     const { fetchOnLoad, tokenId } = props
 
-    const { contractInfo, balance } = useContext(Context)
+    const { addressOrName, contractInterface, balance } = useContext(Context)
 
     const [decodedURIImage, setDecodedURIImage] = useState('')
 
@@ -17,7 +17,7 @@ const SVGie = (props) => {
     const showToast = (title, status = 'info') => toast({ title, status, isClosable: fetchOnLoad ? true : false })
 
     const { data, error, isError, isLoading, isFetched } =
-        useContractRead(contractInfo, 'tokenURI', { args: tokenId, enabled: true })
+        useContractRead({ addressOrName, contractInterface, functionName: 'tokenURI', args: tokenId, enabled: true })
 
     useEffect(() => {
         if (isLoading || !isFetched) return;
@@ -39,12 +39,6 @@ const SVGie = (props) => {
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data, error, isError, isFetched, isLoading]);
-
-    // Check Decoded Image
-    // useEffect(()=>{
-    //     if (!decodedURIImage) return
-    //     console.log(decodedURIImage)
-    // },[decodedURIImage])
 
     return (
         <>

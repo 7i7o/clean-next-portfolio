@@ -1,5 +1,4 @@
-import { Link as Button, Center, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverHeader, PopoverTrigger, Portal, IconButton, Link } from "@chakra-ui/react"
-import { ethers } from "ethers"
+import { Center, Link } from "@chakra-ui/react"
 import { etherscanBaseUri, openseaBaseUri } from "../../constants/constants"
 import EtherscanIcon from "./EtherscanIcon"
 import OpenSeaIcon from "./OpenSeaIcon"

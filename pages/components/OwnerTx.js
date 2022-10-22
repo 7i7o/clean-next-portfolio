@@ -1,7 +1,7 @@
 import { useContext } from "react"
 import { Context } from "../Context"
 
-const OwnerTeamMint = (props) => {
+const OwnerTx = (props) => {
 
     const { arg } = props
     const { wrongNetwork } = useContext(Context)
@@ -9,4 +9,4 @@ const OwnerTeamMint = (props) => {
     return <></>
 }
 
-export default OwnerTeamMint
+export default OwnerTx
